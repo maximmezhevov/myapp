@@ -3,8 +3,8 @@ import { Navigate, useRoutes } from 'react-router-dom'
 
 import { Workshop } from './pages/workshop/Workshop'
 import { Layout } from './Layout'
-import { ProjectItem } from './pages/workshop/ProjectItem'
-import { ProjectItemLayout } from './pages/workshop/ProjectItemLayout'
+import { ProjectItem } from './pages/workshop/components/ProjectItem'
+import { ProjectItemLayout } from './pages/workshop/components/ProjectItemLayout'
 
 import { About } from './pages/About'
 

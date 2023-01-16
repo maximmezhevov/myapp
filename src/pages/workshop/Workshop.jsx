@@ -6,8 +6,6 @@ import { useTheme } from '../../hooks/useTheme'
 
 import { Nav } from './components/Nav'
 
-import { ProjectsList } from './ProjectsList'
-
 export const Workshop = ({projects}) => {
 	
 
@@ -64,12 +62,12 @@ export const Workshop = ({projects}) => {
 
 						<div className='flex justify-between items-center gap-x-2'>
 
-							<button onClick={() => toggleOpen1(open1)} className='grow flex items-center gap-x-2 overflow-hidden'>
+							<div onClick={() => toggleOpen1(open1)} className='grow flex items-center gap-x-2 overflow-hidden'>
 								<svg className={`w-3 h-3 ${open1 ? 'rotate-90 stroke-blue-500 dark:stroke-orange-400' : 'stroke-[#333] dark:stroke-white'} transition-svg1 duration-300`} strokeWidth={3} fill='none' /*stroke="currentColor"*/ viewBox="0 0 24 24">
 									<path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
 								</svg>
 								<span>projects</span>
-							</button>
+							</div>
 
 							{open1 &&
 								<div className='flex gap-x-1'>
