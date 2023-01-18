@@ -14,6 +14,7 @@ import { Contacts } from './pages/Сontacts'
 import { TransitionGroup } from './DEV/transitionGroup/TransitionGroup'
 import { Search } from './DEV/Search'
 import { Accordion } from './DEV/Accordion'
+import { Test } from './DEV/test'
 
 
 export const App = () => {
@@ -29,6 +30,7 @@ export const App = () => {
 		{id: 'transitionGroup', category: 'workshop', app: <TransitionGroup />},
 		{id: 'Search', category: 'workshop', app: <Search />},
 		{id: 'Accordion', category: 'workshop', app: <Accordion />},
+		{id: 'test', category: 'workshop', app: <Test />},
 
 
 

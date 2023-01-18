@@ -210,8 +210,8 @@ const AccordionUIcomponent3 = ({
   isActive, 
   // active, setActive
 }) => { 
-  console.log(category)
-  console.log(isActive)
+  // console.log(category)
+  // console.log(isActive)
 
   const [active, setActive] = useState(null)
 

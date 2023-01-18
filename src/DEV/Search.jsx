@@ -18,47 +18,8 @@ export const Search = () => {
       .then((response) => response.json())
       .then(data => setUsers(data));
   }, [])
- 
-  // const LinearSearch = () => {
-  //   const [nameQuery, setNameQuery] = useState('')
-  //   const filteredUsers = users
-  //     .filter(user => user.name.toLowerCase().includes(nameQuery.toLowerCase()))
 
-  //   return (
-  //     <div className='flex flex-col gap-y-2'>
-  //       <h2>Linear search</h2>
-  //       <form 
-  //         onSubmit={(event) => event.preventDefault()} 
-  //         className='relative w-[200px] flex items-center gap-x-1'>
-  //         <input type='text' placeholder='Search...' maxLength='10'
-  //         value={nameQuery} onChange={(event) => setNameQuery(event.target.value)} 
-  //         className={`relative w-full px-1 border`} />
-  //         <div className='absolute right-0 flex items-center'>
-  //           {nameQuery &&
-  //               <svg className='w-4 h-4 mr-0.5 cursor-pointer' onClick={() => setNameQuery('')}
-  //               xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" >
-  //                 <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
-  //               </svg>
-  //             }
-  //             <button className='px-1'>Search</button>
-  //         </div>
-  //       </form>
-
-  //       {/* ${nameQuery && 'pr-[22px]'} */}
-
-  //       <ul className='w-[200px] min-h-[236px] flex flex-col gap-y-1'>
-  //         {filteredUsers
-  //           .map(user => (
-  //             <li key={user.id} className='text-center'>
-  //               {user.name}
-  //             </li>
-  //           ))
-  //         }
-  //       </ul>
-
-  //     </div>
-  //   )
-  // }
+  //
 
   const LiveLinearSearch = () => {
     const [nameQuery, setNameQuery] = useState('')
@@ -66,31 +27,29 @@ export const Search = () => {
       .filter(user => user.name.toLowerCase().includes(nameQuery.toLowerCase()))
 
     return (
-      <div className='flex flex-col gap-y-2'>
+      <div className='w-72 flex flex-col gap-y-2'>
         <h2>Live search (Linear search)</h2>
-        <form 
-          onSubmit={(event) => event.preventDefault()} 
-          className='relative w-[200px] flex items-center'>
-          <input type='text' placeholder='Search...' maxLength='10'
-          value={nameQuery} onChange={(event) => setNameQuery(event.target.value)} 
-          className='relative w-full px-1 border focus:outline-none focus:border-black' />
-          {nameQuery &&
-            <svg className={`absolute right-[4px] w-4 h-4 cursor-pointer ${!filteredUsers.length > 0 && 'text-red-400'}`} onClick={() => setNameQuery('')}
-            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" >
-              <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
-            </svg>
+        <form className='relative flex items-center' onSubmit={(event) => event.preventDefault()} >
+          <input className='w-full pl-1 pr-[22px] border rounded bg-transparent focus:outline-none' value={nameQuery} onChange={(event) => setNameQuery(event.target.value)} placeholder='Search...' maxLength='13' />
+          {nameQuery.length > 0 &&
+            <button className='absolute right-[6px]' onClick={() => setNameQuery('')} tabIndex='-1'>
+              <svg className='w-3 h-3'
+              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+              </svg>
+            </button>
           }
         </form>
-        <ul className='w-[200px] min-h-[236px] flex flex-col gap-y-1'>
+        <ul className=' min-h-[220px] flex flex-col gap-y-1'>
           {filteredUsers.length > 0 
-          ?
-            (filteredUsers.map(user => (
+          ? (filteredUsers.map(user => (
               <li key={user.id} className='w-full text-center'>
                 {user.name}
               </li>
             )))
-          : 
-            <button onClick={() => setNameQuery('')} className='w-full text-center text-red-400 cursor-pointer'>no matches</button>
+          : <button className='w-full text-center text-red-400 cursor-pointer' onClick={() => setNameQuery('')}>
+              no matches
+            </button>
           }
         </ul>
       </div>
