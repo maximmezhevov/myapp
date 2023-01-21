@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
+import { useLayout } from '../../../hooks/useLayout'
+
 export const Nav = ({projects}) => {
 
   const pagesNav = () => {
     return (
-      <ul className='ml-5'>
+      <ul id='pagesNav' className='ml-5'>
         {projects
           .filter(project => project.category === 'pages')
           .map(project => 
@@ -22,7 +24,7 @@ export const Nav = ({projects}) => {
     const [active, setActive] = useState(null)
 
     return(
-      <div>
+      <div id='categoryNav'>
         <CategoryNav projects={projects} category='projects' active={active} setActive={setActive} />
         <CategoryNav projects={projects} category='workshop' active={active} setActive={setActive} />
       </div>
@@ -30,7 +32,7 @@ export const Nav = ({projects}) => {
   }
 
   return (
-    <nav className='flex flex-col gap-y-2'>
+    <nav id='Nav' className='flex flex-col gap-y-2'>
       {pagesNav()}
       {categoryNav()}
     </nav>
@@ -40,9 +42,11 @@ export const Nav = ({projects}) => {
 // components
 
 const CategoryNav = ({projects, category, active, setActive, }) => {
+  const {heightAccordion} = useLayout()
+
   const [toggleSort, setToggleSort] = useState(false)
   const [toggleSearch, setToggleSearch] = useState(false)
-  const [searchQuery, setSearchQuery] = useState('')
+  const [searchQuery, setSearchQuery] = useState('') // search
 
   const activeCategory = () => {
     const defaultActive = (setToggleSort(false), setToggleSearch(false))
@@ -63,7 +67,7 @@ const CategoryNav = ({projects, category, active, setActive, }) => {
     /*search*/.filter(project => project.id.toLowerCase().includes(searchQuery.toLowerCase()))
 
   return (
-    <div>
+    <div id={`${category}Nav`}>
       <div className='flex items-center'>
         <button onClick={activeCategory} className={`flex gap-x-1 ${active === category ? 'rotate-90 opacity-100' : 'opacity-50'}`}>
           <svg className='w-4 h-4'
@@ -89,38 +93,46 @@ const CategoryNav = ({projects, category, active, setActive, }) => {
           </div>
         }
       </div>
-      {active === category &&
-        <ul className='border-l ml-2 pl-3'>
-          {toggleSearch &&
-            <div className='flex items-center relative'>
-              <input autoFocus className='w-full border rounded bg-transparent pl-1 pr-6 my-1 focus:outline-none' value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)} placeholder='search...' maxLength='13'/>
-              {searchQuery.length > 0 &&
-                <button className='absolute right-[7px]' onClick={() => setSearchQuery('')} title='click to clear the search input field' tabIndex='-1'>
-                  <svg className='w-3 h-3'
-                  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
-                  </svg>
-                </button>
-              }
-            </div>
-          }
-          {filteredProjects.length > 0 
-          ? (filteredProjects 
-              .map(project => 
-                <li key={project.id}>
-                  <NavLink className='block' to={`${project.id}`}>
-                    {project.id}
-                  </NavLink>
-                </li>
+
+      {/* {active === category && */}
+        <div style={{direction: 'rtl'}} 
+             className='scroll overflow-y-scroll ml-2'>
+          <ul id={`${category}List`}
+              style={active === category 
+                ? {height: heightAccordion, direction: 'ltr'} 
+                : {height: 0, direction: 'ltr'}} 
+              className='ml-1 pl-2 transition-[height] duration-300'>
+            {toggleSearch &&
+              <div className='flex items-center sticky top-0'>
+                <input autoFocus className='w-full border rounded dark:border-[#444] dark:bg-[#333] backdrop-blur pl-1 pr-6 my-1 focus:outline-none transition-inputColors duration-300' value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)} placeholder='search...' maxLength='13'/>
+                {searchQuery.length > 0 &&
+                  <button className='absolute right-[7px]' onClick={() => setSearchQuery('')} title='click to clear the search input field' tabIndex='-1'>
+                    <svg className='w-3 h-3'
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+                    </svg>
+                  </button>
+                }
+              </div>
+            }
+            {filteredProjects.length > 0 
+            ? (filteredProjects 
+                .map(project => 
+                  <li key={project.id}>
+                    <NavLink className='block' to={`${project.id}`} tabIndex={active === category ? '0' : '-1'}>
+                      {project.id}
+                    </NavLink>
+                  </li>
+                )
               )
-            )
-          : <button className='w-full text-center' onClick={() => setSearchQuery('')} title='click to clear the search input field'>
-            <span className='block text-red-400'>not found</span> 
-            <span className='block text-xs'>click to clear the search input field</span>
-          </button>
-          }
-        </ul>  
-      }
+            : <button className='w-full text-center' onClick={() => setSearchQuery('')} title='click to clear the search input field'>
+              <span className='block text-red-400'>no matches</span> 
+              <span className='block text-xs'>click to clear the search input field</span>
+            </button>
+            }
+          </ul> 
+        </div> 
+      {/* } */}
     </div>
   )
 }

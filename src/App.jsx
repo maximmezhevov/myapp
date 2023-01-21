@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import { Navigate, useRoutes } from 'react-router-dom'
 
 import { Workshop } from './pages/workshop/Workshop'
-import { Layout } from './Layout'
+// import { Layout } from './Layout'
 import { ProjectItem } from './pages/workshop/components/ProjectItem'
 import { ProjectItemLayout } from './pages/workshop/components/ProjectItemLayout'
 
@@ -15,6 +15,7 @@ import { TransitionGroup } from './DEV/transitionGroup/TransitionGroup'
 import { Search } from './DEV/Search'
 import { Accordion } from './DEV/Accordion'
 import { Test } from './DEV/test'
+import { Test2 } from './DEV/test2'
 
 
 export const App = () => {
@@ -31,6 +32,8 @@ export const App = () => {
 		{id: 'Search', category: 'workshop', app: <Search />},
 		{id: 'Accordion', category: 'workshop', app: <Accordion />},
 		{id: 'test', category: 'workshop', app: <Test />},
+		{id: 'test2', category: 'workshop', app: <Test2 />},
+
 
 
 
@@ -38,37 +41,37 @@ export const App = () => {
 
 
 
-		// {id: 'sdfsdsdf234fsdf',category: 'projects', app: <div>asdasda</div>},
-		// {id: 'sdf',category: 'projects', app: <div>asdasda</div>},
-		// {id: 'sdfsd234fsdf',category: 'projects', app: <div>asdasda</div>},
-		// {id: 'sd2423fsdfsdf',category: 'projects', app: <div>asdasda</div>},
-		// {id: '4234',category: 'projects', app: <div>asdasda</div>},
-		// {id: '234',category: 'projects', app: <div>asdasda</div>},
-		// {id: 'sdfssdfs324df3dfsdf',category: 'projects', app: <div>asdasda</div>},
-		// {id: '1dfgdfgdg', category: 'projects',app: <div>asdasda</div>},
-		// {id: 'sdfsf',category: 'projects', app: <div>asdasda</div>},
-		// {id: 'sdfssdfsdf3dfsd123f',category: 'projects', app: <div>asdasda</div>},
-		// {id: 'sdfssdfsdfsdfs123df3dfsdf',category: 'projects', app: <div>asdasda</div>},
-		// {id: '42424',category: 'projects', app: <div>asdasda</div>},
-		// {id: 'sdf3234234',category: 'projects', app: <div>asdasda</div>},
-		// {id: 'sdfssdfsdf3dfsd12313f',category: 'projects', app: <div>asdasda</div>},
-		// {id: 'sdfssdfs23424df3dfsdf',category: 'projects', app: <div>asdasda</div>},
-		// {id: 'sdfssdsdfsdf343fsdf3dfsdf',category: 'projects', app: <div>asdasda</div>},
-		// {id: 'sdfssdfsdfsdfsdf3dfsdf', category: 'projects',app: <div>asdasda</div>},
-		// {id: 'sdfssdfsd234d2f3dfsdf',category: 'projects', app: <div>asdasda</div>},
-		// {id: 'sdfssdfsdf4234d3dfsdf',category: 'projects', app: <div>asdasda</div>},
-		// {id: 'sdfssd44d44d14fsdf3dfsdf', category: 'projects',app: <div>asdasda</div>},
-		// {id: 'sdfssd11d1d1dfsdf3dfsdf',category: 'projects', app: <div>asdasda</div>},
-		// {id: 'd14',category: 'projects', app: <div>asdasda</div>},
-		// {id: 'sdfssdf1414cdsdf3dfsdf',category: 'projects', app: <div>asdasda</div>},
-		// {id: '1231', category: 'projects',app: <div>asdasda</div>},
-		// {id: 'sdfssdfd141sdf3dfsdf',category: 'projects', app: <div>asdasda</div>},
-		// {id: 'sdfssd44d44d99fsdf3dfsdf', category: 'projects',app: <div>asdasda</div>},
-		// {id: 'sdfssd48844d14fsdf3dfsdf',category: 'projects', app: <div>asdasda</div>},
-		// {id: 'sdf1231ssdfsdf3dfsdf', category: 'projects',app: <div>asdasda</div>},
-		// {id: 'sdf3d44d44d14fsdf3dfsdf', category: 'projects',app: <div>asdasda</div>},
-		// {id: 'sdfssd44d14d14fsdf3dfsdf',category: 'projects', app: <div>asdasda</div>},
-		// {id: 'sdfssd44d44d14fsd13dfsdf',category: 'projects', app: <div>asdasda</div>},
+		{id: 'sdfsdsdf234fsdf',category: 'projects', app: <div>asdasda</div>},
+		{id: 'sdf',category: 'projects', app: <div>asdasda</div>},
+		{id: 'sdfsd234fsdf',category: 'projects', app: <div>asdasda</div>},
+		{id: 'sd2423fsdfsdf',category: 'projects', app: <div>asdasda</div>},
+		{id: '4234',category: 'projects', app: <div>asdasda</div>},
+		{id: '234',category: 'projects', app: <div>asdasda</div>},
+		{id: 'sdfssdfs324df3dfsdf',category: 'projects', app: <div>asdasda</div>},
+		{id: '1dfgdfgdg', category: 'projects',app: <div>asdasda</div>},
+		{id: 'sdfsf',category: 'projects', app: <div>asdasda</div>},
+		{id: 'sdfssdfsdf3dfsd123f',category: 'projects', app: <div>asdasda</div>},
+		{id: 'sdfssdfsdfsdfs123df3dfsdf',category: 'projects', app: <div>asdasda</div>},
+		{id: '42424',category: 'projects', app: <div>asdasda</div>},
+		{id: 'sdf3234234',category: 'projects', app: <div>asdasda</div>},
+		{id: 'sdfssdfsdf3dfsd12313f',category: 'projects', app: <div>asdasda</div>},
+		{id: 'sdfssdfs23424df3dfsdf',category: 'projects', app: <div>asdasda</div>},
+		{id: 'sdfssdsdfsdf343fsdf3dfsdf',category: 'projects', app: <div>asdasda</div>},
+		{id: 'sdfssdfsdfsdfsdf3dfsdf', category: 'projects',app: <div>asdasda</div>},
+		{id: 'sdfssdfsd234d2f3dfsdf',category: 'projects', app: <div>asdasda</div>},
+		{id: 'sdfssdfsdf4234d3dfsdf',category: 'projects', app: <div>asdasda</div>},
+		{id: 'sdfssd44d44d14fsdf3dfsdf', category: 'projects',app: <div>asdasda</div>},
+		{id: 'sdfssd11d1d1dfsdf3dfsdf',category: 'projects', app: <div>asdasda</div>},
+		{id: 'd14',category: 'projects', app: <div>asdasda</div>},
+		{id: 'sdfssdf1414cdsdf3dfsdf',category: 'projects', app: <div>asdasda</div>},
+		{id: '1231', category: 'projects',app: <div>asdasda</div>},
+		{id: 'sdfssdfd141sdf3dfsdf',category: 'projects', app: <div>asdasda</div>},
+		{id: 'sdfssd44d44d99fsdf3dfsdf', category: 'projects',app: <div>asdasda</div>},
+		{id: 'sdfssd48844d14fsdf3dfsdf',category: 'projects', app: <div>asdasda</div>},
+		{id: 'sdf1231ssdfsdf3dfsdf', category: 'projects',app: <div>asdasda</div>},
+		{id: 'sdf3d44d44d14fsdf3dfsdf', category: 'projects',app: <div>asdasda</div>},
+		{id: 'sdfssd44d14d14fsdf3dfsdf',category: 'projects', app: <div>asdasda</div>},
+		{id: 'sdfssd44d44d14fsd13dfsdf',category: 'projects', app: <div>asdasda</div>},
 
 
 
@@ -87,8 +90,8 @@ export const App = () => {
 				}
 			]
 		},
-		{path: '*', element: /*<Navigate to='workshop/about' />*/ <div>404</div>}
+		// {path: '*', element: /*<Navigate to='workshop/about' />*/ <div>404</div>}
 	])
 
-	return <Layout>{element}</Layout>
+	return <Fragment>{element}</Fragment> //<Layout>{element}</Layout>
 }

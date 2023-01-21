@@ -20,9 +20,12 @@ module.exports = {
       transitionProperty: {
         'theme': 'color, background-color',
         'border': 'border-color',
+        'borderColors': 'border-color',
         'color': 'color',
         'height': 'height, maxHeight',
-        'svg1': 'stroke, transform,'
+        'svg1': 'stroke, transform,',
+        'inputColors': 'background-color, border-color',
+        'bgColors': 'background-color'
       }
       
     },

@@ -2,7 +2,9 @@ import { useLayoutEffect, useState } from 'react'
 
 export const useLayout = () => {
 
-	const headerHeight = (8 * 2/*margin*/) + 16/*heder*/ + (24 * 2/*pages list*/) + (8 * 2/*gap*/) + 8 + 24 + 8 + (24*3)
+	const headerHeight = 
+		((8 * 2) + 16 + (24 * 2)) + 
+		((8 * 3) + (24*3))
 	// console.log(headerHeight)
 	// const headerHeight = 208
 
@@ -17,16 +19,16 @@ export const useLayout = () => {
 	}, [])
 
 	// const resultWindowInnerHeight = windowInnerHeight - (headerHeight + marginBotton)
-	const resultWindowInnerHeight = windowInnerHeight - heightH2
+	// const resultWindowInnerHeight = windowInnerHeight - heightH2
 	const heightAccordion = windowInnerHeight - headerHeight
 
 
 	return {
-		headerHeight, 
+		// headerHeight, 
 		windowInnerHeight,
 
-		resultWindowInnerHeight,
-		resultWindowInnerHeight2: {minHeight: resultWindowInnerHeight},
+		// resultWindowInnerHeight,
+		// resultWindowInnerHeight2: {minHeight: resultWindowInnerHeight},
 
 		heightAccordion
 	}
