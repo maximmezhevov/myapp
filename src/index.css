@@ -7,14 +7,22 @@
 }
 
 @layer components {
-  body {@apply bg-white text-[#333] dark:bg-[#333] dark:text-white transition-colors duration-300}
+  body {@apply
+    bg-white text-[#333] 
+    dark:bg-[#333] dark:text-white
+  }
 }
   .todo-button {@apply shrink-0 bg-white border border-gray-300 rounded px-2 py-1 flex justify-center items-center text-xs text-black disabled:text-gray-400;
 }
   /* .active {@apply border-r border-white} */
 
-  .scroll::-webkit-scrollbar {@apply w-[1px]}
-  /* .scroll::-webkit-scrollbar-track {background: #444; border-radius: 10px; margin: 0px 0 5px 0;} */
-  .scroll::-webkit-scrollbar-track {@apply bg-[#e5e7eb] dark:bg-[#444] /*my-[5px]*/ transition-bgColors duration-300} 
-  /* .scroll::-webkit-scrollbar-thumb {background: white; border-radius: 10px;}  */
-  .scroll::-webkit-scrollbar-thumb {@apply bg-[#333] dark:bg-white transition-bgColors duration-300} 
+
+  /*Firefox scroll*/ 
+  /* .ScrollingForCategories{
+    scrollbar-width: 15px;
+    scrollbar-color: blue orange;
+  } */
+  /*Chrome, Edge and Safari scroll*/ 
+  /* .ScrollingForCategories::-webkit-scrollbar {width: 10px;}
+  .ScrollingForCategories::-webkit-scrollbar-track {@apply bg-[#e5e7eb] dark:bg-[#444]} 
+  .ScrollingForCategories::-webkit-scrollbar-thumb {@apply bg-black dark:bg-white } */

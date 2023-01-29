@@ -44,17 +44,24 @@ export const Test = () => {
   const categoryNav = () => {
     const [active, setActive] = useState(null)
     return(
-      <div className='flex flex-col max-h-screen'>
-        <CategoryNav 
-          projrcts={projrcts} category='projects' 
-          active={active} setActive={setActive} />
-        <CategoryNav 
-          projrcts={projrcts} category='workshop' 
-          active={active} setActive={setActive} />
-        <CategoryNav 
-          projrcts={projrcts} category='null' 
-          active={active} setActive={setActive} />
-      </div>
+      <>
+        <div className='flex flex-col gap-y-2 max-h-[500px]'> 
+          <div>pages</div>
+          <div className='flex flex-col h-full'>
+            <CategoryNav 
+              projrcts={projrcts} category='projects' 
+              active={active} setActive={setActive} />
+            <CategoryNav 
+              projrcts={projrcts} category='workshop' 
+              active={active} setActive={setActive} />
+            <CategoryNav 
+              projrcts={projrcts} category='null' 
+              active={active} setActive={setActive} />
+          </div>
+          <div>asd</div>
+        </div>
+      </>
+      
     )
   }
 
@@ -70,17 +77,22 @@ const CategoryNav = ({projrcts, category, active, setActive, }) => {
     } return setActive(category)
   }
   return (
-    <ul className={active === category ? 'h-[700px] overflow-y-scroll overflow-hidden bg-violet-900' : ''}>
-      <button onClick={activeCategory}>{category}</button>
+    <>
+      <button className='text-start' onClick={activeCategory}>{category}</button>
       {active === category &&
-        <li className={active && ''}>
-          {projrcts
-            .filter(p => p.category === category)
-            .map(p => 
-              <div key={p.id}>id: {p.id}, category: {p.category}</div>
-            )}
-        </li>  
+      <ul className='grow overflow-y-scroll overflow-hidden'>
+          {/* className={active === category ? 'grow overflow-y-scroll overflow-hidden' : ''}> */}
+        {active === category &&
+          <li className={active && ''}>
+            {projrcts
+              .filter(p => p.category === category)
+              .map(p => 
+                <div key={p.id}>id: {p.id}, category: {p.category}</div>
+              )}
+          </li>  
+        }
+      </ul>
       }
-    </ul>
+    </>
   )
 }

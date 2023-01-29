@@ -1,15 +1,6 @@
 import { useLayoutEffect, useState } from 'react'
 
 export const useLayout = () => {
-
-	const headerHeight = 
-		((8 * 2) + 16 + (24 * 2)) + 
-		((8 * 3) + (24*3))
-	// console.log(headerHeight)
-	// const headerHeight = 208
-
-	const heightH2 = 16
-
 	const [windowInnerHeight, setWindowInnerHeight] = useState(window.innerHeight)
 	useLayoutEffect(() => {
 		const resizewindowInnerHeight = () => {setWindowInnerHeight(window.innerHeight)}
@@ -18,18 +9,11 @@ export const useLayout = () => {
 		return () => {window.removeEventListener('resize', resizewindowInnerHeight)}
 	}, [])
 
-	// const resultWindowInnerHeight = windowInnerHeight - (headerHeight + marginBotton)
-	// const resultWindowInnerHeight = windowInnerHeight - heightH2
-	const heightAccordion = windowInnerHeight - headerHeight
-
+	const HeightCategoryNavList = windowInnerHeight - ((24 * 4 + (8 * 5)) + (24 * 2)) 
 
 	return {
-		// headerHeight, 
 		windowInnerHeight,
-
-		// resultWindowInnerHeight,
-		// resultWindowInnerHeight2: {minHeight: resultWindowInnerHeight},
-
-		heightAccordion
+		// windowInnerHeight: {height: windowInnerHeight},
+		HeightCategoryNavList
 	}
 }
