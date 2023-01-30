@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
-import { Transition } from 'react-transition-group'
+import { CSSTransition } from 'react-transition-group'; import './Accordion7.css'
 
-export const Accordion5 = () => {
+export const Accordion7 = () => {
   const boxs = [
     {id: 'box1', title: 'box1', text: 'box1'},
     {id: 'box2', title: 'box2', text: 'box2'},
@@ -10,7 +10,7 @@ export const Accordion5 = () => {
 
   return (
     <div className='w-[300px]'>
-      <h3>Accordion5, [array],<br />{`{ Transition }`} react-transition-group</h3>
+      <h3>Accordion7, [array],<br />{`{ CSSTransition }`} react-transition-group</h3>
       { boxs.map(box => 
           <AccordionItem key={box.id} title={box.title}>{box.text}</AccordionItem>
         )
@@ -23,27 +23,16 @@ const AccordionItem = ({title, children}) => {
   const [active, setActive] = useState(false)
   const accordionItem = useRef(null)
 
-  const duration = 150
-  const defaultStyle = {transition: `height, ${duration}ms ease-in-out`, overflow: 'hidden'}
-  const transitionStyles = {
-    entering: {height: '68px'},
-    entered:  {height: '68px'},
-    exiting:  {height: '0'},
-    exited:   {height: '0'}
-  }
-
   return (
     <>
       <button onClick={() => setActive(!active)} className='w-full border p-1'>
         {active ? `close ${title}` : `open ${title}`}
       </button>
-      <Transition nodeRef={accordionItem} in={active} timeout={duration} unmountOnExit>
-        {state => (
-          <div ref={accordionItem} className='border flex justify-center items-center' style={{...defaultStyle, ...transitionStyles[state]}} >
+      <CSSTransition nodeRef={accordionItem} in={active} timeout={150} classNames='accordion7' unmountOnExit >
+          <div ref={accordionItem} className='h-[68px] overflow-hidden border flex justify-center items-center'>
             {children}
           </div> 
-        )}
-      </Transition>
+      </CSSTransition>
     </>
   )
 }

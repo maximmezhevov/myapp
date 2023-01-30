@@ -22,7 +22,7 @@ module.exports = {
         'border': 'border-color',
         'borderColors': 'border-color',
         'color': 'color',
-        'height': 'height, maxHeight',
+        'height': 'height',
         'svg1': 'stroke, transform,',
         'inputColors': 'background-color, border-color',
         'bgColors': 'background-color'

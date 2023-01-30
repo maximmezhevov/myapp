@@ -11,7 +11,7 @@ export const Accordion6 = () => {
   const [active, setActive] = useState(null)
   return (
     <div className='w-[300px]'>
-      <h3>Accordion6, [array],<br />react-transition-group {`{ Transition }`}</h3>
+      <h3>Accordion6, [array],<br />{`{ Transition }`} react-transition-group</h3>
       { boxs.map(box => 
           <AccordionItem key={box.id} title={box.title} active={active} setActive={setActive}>
             {box.text}
@@ -33,9 +33,7 @@ const AccordionItem = ({title, active, setActive, children}) => {
   const accordionItem = useRef(null)
 
   const duration = 150
-  const defaultStyle = {
-    transition: `height ${duration}ms ease-in-out`,
-  }
+  const defaultStyle = {transition: `height ${duration}ms ease-in-out`, overflow: 'hidden'}
   const transitionStyles = {
     entering: {height: '68px'},
     entered:  {height: '68px'},
@@ -49,7 +47,7 @@ const AccordionItem = ({title, active, setActive, children}) => {
       </button>
       <Transition nodeRef={accordionItem} in={active === title} timeout={duration} unmountOnExit>
         {state => (
-          <div ref={accordionItem} className='border overflow-hidden flex justify-center items-center' style={{...defaultStyle, ...transitionStyles[state]}} >
+          <div ref={accordionItem} className='border flex justify-center items-center' style={{...defaultStyle, ...transitionStyles[state]}} >
             {children}
           </div>
         )}

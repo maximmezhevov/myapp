@@ -1,0 +1,14 @@
+.accordion7-enter {
+  height: 0;
+}
+.accordion7-enter-active {
+  height: 68px;
+  transition: height 150ms ease-in-out;
+}
+.accordion7-exit {
+  height: 68px;
+}
+.accordion7-exit-active {
+  height: 0;
+  transition: height 150ms ease-in-out;
+}
