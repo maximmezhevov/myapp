@@ -31,7 +31,7 @@ export const TransitionGroup = () => {
       <div id='cssTransitionClassName'>
         <h2>cssTransitionClassName</h2>
         <button type='button' onClick={() => setIsShowBox(!isShowBox)}>show box</button>
-        <CSSTransition nodeRef={box} in={isShowBox} unmountOnExit timeout={{enter: 1000, exit: 1000,}}
+        <CSSTransition nodeRef={box} in={isShowBox}  timeout={{enter: 1000, exit: 1000,}}
           classNames={{
             // appear: 'my-appear',
             // appearActive: 'my-active-appear',
@@ -39,7 +39,7 @@ export const TransitionGroup = () => {
             enter: 'opacity-0',
             enterActive: 'opacity-100 duration-1000', ///
             // enterDone: 'my-done-enter',
-            // exit: 'opacity-100',                                                                                      // ???
+            exit: 'opacity-100',
             exitActive: 'opacity-0 duration-1000',
             // exitDone: 'my-done-exit',
           }}

@@ -3,7 +3,7 @@ import { useState } from 'react'
 export const Accordion2 = () => {
   const [active, setActive] = useState(null)
   return (
-    <div className='w-[200px]'>
+    <div className='w-[300px]'>
       <h3>Accordion2</h3>
       <AccordionItem title='box1' active={active} setActive={setActive}>box1</AccordionItem>
       <AccordionItem title='box2' active={active} setActive={setActive}>box2</AccordionItem>
@@ -20,7 +20,7 @@ const AccordionItem = ({title, active, setActive, children}) => {
     return setActive(title)
   }
   return (
-    <div>
+    <>
       <button onClick={isActive} className='w-full border p-1'>
         {active === title ? `close ${title}` : `open ${title}`}
       </button>
@@ -28,6 +28,6 @@ const AccordionItem = ({title, active, setActive, children}) => {
         <div className='h-[68px] border p-1 flex justify-center items-center'>
           {children}
         </div> }
-    </div>
+    </>
   )
 }

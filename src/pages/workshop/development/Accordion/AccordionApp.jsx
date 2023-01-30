@@ -2,6 +2,8 @@ import { Accordion1 } from './Accordion1'
 import { Accordion2 } from './Accordion2'
 import { Accordion3 } from './Accordion3'
 import { Accordion4 } from './Accordion4'
+import { Accordion5 } from './Accordion5'
+import { Accordion6 } from './Accordion6'
 
 export const AccordionApp = () => {
   return (
@@ -13,6 +15,10 @@ export const AccordionApp = () => {
       <div className='flex gap-x-2'>
         <Accordion3 />
         <Accordion4 />
+      </div>
+      <div className='flex gap-x-2'>
+        <Accordion5 />
+        <Accordion6 />
       </div>
     </div>
   )
