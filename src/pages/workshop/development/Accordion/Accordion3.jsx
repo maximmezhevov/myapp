@@ -8,7 +8,7 @@ export const Accordion3 = () => {
   ]
 
   return (
-    <div className='w-[300px]'>
+    <div className='w-[350px]'>
       <h3>Accordion3, [array]</h3>
       { boxs.map(box => 
           <AccordionItem key={box.id} title={box.title}>{box.text}</AccordionItem>

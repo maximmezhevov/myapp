@@ -1,3 +1,6 @@
+import { useContext } from 'react'
+import { ContextProjects } from '../../ContextProjects'
+
 import { Outlet } from 'react-router-dom'
 
 import { useTheme } from '../../hooks/useTheme'
@@ -5,7 +8,9 @@ import { useLayout } from '../../hooks/useLayout'
 
 import { Nav } from './components/Nav'
 
-export const Workshop = ({projects}) => {
+export const Workshop = () => {
+	const {projects} = useContext(ContextProjects)
+	
 	const {toggleThemeButton} = useTheme()
 	const {windowInnerHeight} = useLayout()
 

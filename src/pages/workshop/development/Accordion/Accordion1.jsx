@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 export const Accordion1 = () => {
   return (
-    <div className='w-[300px]'>
+    <div className='w-[350px]'>
       <h3>Accordion1</h3>
       <AccordionItem title='box1'>box1</AccordionItem>
       <AccordionItem title='box2'>box2</AccordionItem>

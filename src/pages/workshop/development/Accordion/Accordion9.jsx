@@ -9,7 +9,7 @@ export const Accordion9 = () => {
   ]
 
   return (
-    <div className='w-[300px]'>
+    <div className='w-[350px]'>
       <h3>Accordion9, [array],<br />{`{ CSSTransition }`} react-transition-group<br />tailwindcss</h3>
       { boxs.map(box => 
           <AccordionItem key={box.id} title={box.title}>{box.text}</AccordionItem>

@@ -3,7 +3,7 @@ import { useState } from 'react'
 export const Accordion2 = () => {
   const [active, setActive] = useState(null)
   return (
-    <div className='w-[300px]'>
+    <div className='w-[350px]'>
       <h3>Accordion2</h3>
       <AccordionItem title='box1' active={active} setActive={setActive}>box1</AccordionItem>
       <AccordionItem title='box2' active={active} setActive={setActive}>box2</AccordionItem>

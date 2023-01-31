@@ -6,10 +6,14 @@ import { Accordion5 } from './Accordion5'
 import { Accordion6 } from './Accordion6'
 import { Accordion7 } from './Accordion7'
 import { Accordion9 } from './Accordion9'
+import { Accordion11 } from './Accordion11'
 
 export const AccordionApp = () => {
   return (
     <div className='flex flex-col gap-y-2'>
+      <div className='flex gap-x-2'>
+        <Accordion11 />
+      </div>
       <div className='flex gap-x-2'>
         <Accordion1 />
         <Accordion2 />

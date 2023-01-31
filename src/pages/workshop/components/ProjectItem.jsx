@@ -1,7 +1,9 @@
-import { Fragment } from 'react'
+import { Fragment, useContext } from 'react'
 import { useParams } from 'react-router-dom'
+import { ContextProjects } from '../../../ContextProjects'
 
-export const ProjectItem = ({projects}) => {
+export const ProjectItem = () => {
+  const {projects} = useContext(ContextProjects)
   const { id } = useParams()
   return (
     <>

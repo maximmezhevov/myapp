@@ -10,7 +10,7 @@ export const Accordion6 = () => {
 
   const [active, setActive] = useState(null)
   return (
-    <div className='w-[300px]'>
+    <div className='w-[350px]'>
       <h3>Accordion6, [array],<br />{`{ Transition }`} react-transition-group</h3>
       { boxs.map(box => 
           <AccordionItem key={box.id} title={box.title} active={active} setActive={setActive}>

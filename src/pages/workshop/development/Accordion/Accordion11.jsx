@@ -1,7 +1,9 @@
-import { useRef, useState } from 'react'
+import { useContext, useRef, useState } from 'react'
 import { Transition } from 'react-transition-group'
+import { ContextProjects } from '../../../../ContextProjects'
 
-export const Accordion5 = () => {
+export const Accordion11 = () => {
+  const {projects} = useContext(ContextProjects)
   const boxs = [
     {id: 'box1', title: 'box1', text: 'box1'},
     {id: 'box2', title: 'box2', text: 'box2'},
@@ -10,17 +12,17 @@ export const Accordion5 = () => {
 
   return (
     <div className='w-[350px]'>
-      <h3>Accordion5, [array],<br />{`{ Transition }`} react-transition-group</h3>
-      { boxs.map(box => 
-          <AccordionItem key={box.id} title={box.title}>{box.text}</AccordionItem>
-        )
-      }
+      <h3>Accordion11, CategoryNav,<br />{`{ Transition }`} react-transition-group</h3>
+        <AccordionItem>
+          <button></button>
+          <div></div>
+        </AccordionItem>
     </div>
   )
 }
 
 const AccordionItem = ({title, children}) => {
-  const [active, setActive] = useState(false)
+  const [activeCategory, setActiveCategory] = useState(false)
   const accordionItem = useRef(null)
 
   const duration = 150
@@ -34,10 +36,10 @@ const AccordionItem = ({title, children}) => {
 
   return (
     <>
-      <button onClick={() => setActive(!active)} className='w-full border p-1'>
-        {active ? `close ${title}` : `open ${title}`}
+      <button onClick={() => setActiveCategory(!activeCategory)} className='w-full border p-1'>
+        {activeCategory ? `close ${title}` : `open ${title}`}
       </button>
-      <Transition nodeRef={accordionItem} in={active} timeout={duration} unmountOnExit>
+      <Transition nodeRef={accordionItem} in={activeCategory} timeout={duration} unmountOnExit>
         {state => (
           <div ref={accordionItem} className='border flex justify-center items-center' style={{...defaultStyle, ...transitionStyles[state]}} >
             {children}
