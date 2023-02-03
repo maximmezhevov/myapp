@@ -12,7 +12,7 @@ import { Contacts } from './pages/Сontacts'
 import { TodoProps } from './pages/workshop/projects/todoProps/TodoProps'
 import { AccordionApp } from './pages/workshop/development/Accordion/AccordionApp'
 import { TabsApp } from './pages/workshop/development/Tabs/TabsApp'
-import { DropdownIndex } from './pages/workshop/development/Dropdown/DropdownIndex'
+// import { DropdownIndex } from './pages/workshop/development/Dropdown/DropdownIndex'
 import { Search } from './pages/workshop/development/Search'
 import { OtherIndex } from './pages/workshop/development/other/OtherIndex'
 
@@ -28,7 +28,7 @@ const Main = () => {
 
     {id: 'accordion', category: 'development', app: <AccordionApp />},
     {id: 'tabs', category: 'development', app: <TabsApp /> },
-    {id: 'dropdown', category: 'development', app: <DropdownIndex />},
+    // {id: 'dropdown', category: 'development', app: <DropdownIndex />},
     {id: 'search', category: 'development', app: <Search />},
     {id: 'other', category: 'development', app: <OtherIndex />}
 
