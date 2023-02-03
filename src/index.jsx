@@ -12,7 +12,9 @@ import { Contacts } from './pages/Сontacts'
 import { TodoProps } from './pages/workshop/projects/todoProps/TodoProps'
 import { AccordionApp } from './pages/workshop/development/Accordion/AccordionApp'
 import { TabsApp } from './pages/workshop/development/Tabs/TabsApp'
+import { DropDownApp } from './pages/workshop/development/DropDown/DropDownApp'
 import { Search } from './pages/workshop/development/Search'
+import { Other } from './pages/workshop/development/other/Other'
 
 
 const Main = () => {
@@ -22,9 +24,16 @@ const Main = () => {
   
     {id: 'todoProps', category: 'projects', app: <TodoProps />, disc: 'useContex and .... bla bla bla'},
   
+
+
     {id: 'accordion', category: 'development', app: <AccordionApp />},
     {id: 'tabs', category: 'development', app: <TabsApp /> },
+    {id: 'dropdown', category: 'development', app: <DropDownApp />},
     {id: 'search', category: 'development', app: <Search />},
+    {id: 'other', category: 'development', app: <Other />}
+
+
+    // {id: 'test', category: 'test', app: <div>test</div>},
   
     // {id: 'sdfsdsdf234fsdf',category: 'projects', app: <div>asdasda</div>},
     // {id: 'sdf',category: 'projects', app: <div>asdasda</div>},

@@ -25,9 +25,9 @@ export const Accordion6 = () => {
 const AccordionItem = ({title, active, setActive, children}) => {
 
   const isActive = () => {
-    if (active === title)
+    if (active === title) {
       return setActive(null)
-    return setActive(title)
+    } return setActive(title)
   }
 
   const accordionItem = useRef(null)

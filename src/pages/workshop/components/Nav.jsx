@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { useLayout } from '../../../hooks/useLayout'
+import { Accordion12 } from '../development/Accordion/Accordion12'
 
 export const Nav = ({projects}) => {
 
@@ -34,6 +35,7 @@ export const Nav = ({projects}) => {
 		<nav className='grow flex flex-col gap-y-2'>
 			{pagesNav()}
 			{categoryNav()}
+			
 		</nav>
 	)
 }

@@ -22,8 +22,7 @@ export const Tabs4 = () => {
 
   return (
     <div className='w-[350px]'>
-      <h3>Tabs4, CategoryNav</h3>
-      <p className='text-xs'>(!) standalone component</p>
+      <h3>Tabs4, CategoryNav [projects]</h3>
       <div className='flex'>
         { category2
             .map(category => 
@@ -33,11 +32,11 @@ export const Tabs4 = () => {
           )
         }
       </div>
-      <div className='h-[64px] border-x border-b overflow-y-scroll'>
+      <div className='h-[68px] border-x border-b overflow-y-scroll'>
         { projects
           .filter(project => project.category === activeCategory)
           .map(project => 
-            <div key={project.id} className='block px-3 py-1'>
+            <div key={project.id} className='px-3 py-1'>
               {project.id}
             </div>
           )

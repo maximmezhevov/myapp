@@ -9,6 +9,7 @@ export const TabsApp = () => {
       <div className='flex gap-x-2'>
         <Tabs4 />
       </div>
+      <br />
       <Tabs1 />
       <div className='flex gap-x-2'>
         <Tabs2 />

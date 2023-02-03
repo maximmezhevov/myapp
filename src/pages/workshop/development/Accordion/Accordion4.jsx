@@ -24,9 +24,9 @@ export const Accordion4 = () => {
 const AccordionItem = ({title, active, setActive, children}) => {
 
   const isActive = () => {
-    if (active === title)
+    if (active === title) {
       return setActive(null)
-    return setActive(title)
+    } return setActive(title)
   }
 
   return (
