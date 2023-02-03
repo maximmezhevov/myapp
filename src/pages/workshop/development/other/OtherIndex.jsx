@@ -2,7 +2,7 @@ import { Other1 } from './Other1'
 import { Other2 } from './Other2'
 import { Other3 } from './Other3'
 
-export const Other = () => {
+export const OtherIndex = () => {
   const {basis} = useSection()
   const apps = [
     { id: '1',
