@@ -4,7 +4,10 @@
 export const DropdownIndex = () => {
   return (
     <div>
-      1
+          <div className='flex flex-col gap-y-2'> 
+      {/* <OutsideClick1 />
+      <Dropdown1 /> */}
+    </div>
     </div>
   )
 }
