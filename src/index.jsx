@@ -29,7 +29,7 @@ const Main = () => {
 
     {id: 'accordion', category: 'development', app: <AccordionApp />},
     {id: 'tabs', category: 'development', app: <TabsApp /> },
-    {id: '_dropdown', category: 'development', app: <_dropdown />},
+    {id: '_dropdown',category: 'development', app: <_dropdown />},
 
     {id: 'search', category: 'development', app: <Search />},
     {id: 'other', category: 'development', app: <OtherIndex />}
