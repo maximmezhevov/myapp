@@ -1,4 +1,4 @@
-import { useSection } from './Other'
+import { useSection } from './OtherIndex'
 
 export const Other2 = ({basis, heading, description, commentary}) => {
   const {header2, border, commentary2} = useSection()
