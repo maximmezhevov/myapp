@@ -2,36 +2,36 @@ import { Fragment } from 'react'
 
 export const SectionLeyout3 = () => {
   const applications = [
-    { id: '1', 
+    { id: 'JSXElement1', 
       JSXElement: <Fragment>JSXElement1</Fragment>,
       order: '',
       // height: 300, 
-      heading: 'heading Other1',
+      heading: '',
       description: 'description',
       topSpase: 'topSpase',
       bottomSpase: 'bottomSpase'
     },
-    { id: '2',
-      order: '',
-      heading: 'heading Other1 and Other2',
+    { id: 'groupedJSXElements 2 3',
+      order: 3,
+      heading: '',
       description: 'description Other1 and Other2',
       topSpase: 'topSpase Other1 and Other2',
       bottomSpase: 'bottomSpase Other1 and Other2',
       groupedJSXElements: [	
-        { id: '3',
+        { id: 'JSXElement2',
           order: '',
           // height: 300,
           JSXElement: <Fragment>JSXElement2</Fragment>,
-          heading: 'heading Other2',
+          heading: '',
           description: 'description',
           topSpase: 'topSpase',
           bottomSpase: 'bottomSpase'
         }, 
-        { id: '4', 
+        { id: 'JSXElement3', 
           order: '',
           // height: 300,
           JSXElement: <Fragment>JSXElement3</Fragment>,
-          heading: 'heading Other3',
+          heading: '',
           description: 'description',
           topSpase: 'topSpase',
           bottomSpase: 'bottomSpase'
@@ -39,6 +39,7 @@ export const SectionLeyout3 = () => {
       ]
     },
     { id: 'groupedJSXElements 4 5 6',
+      order: 4,
       groupedJSXElements: [	
         { id: 'JSXElement4',
           JSXElement: <Fragment>JSXElement4</Fragment>,
@@ -50,7 +51,15 @@ export const SectionLeyout3 = () => {
         JSXElement: <Fragment>JSXElement5</Fragment>,
         }
       ]
-    }
+    },
+    { id: 'groupedJSXElements 6',
+      order: 2,
+      groupedJSXElements: [	
+        { id: 'JSXElement6',
+          JSXElement: <Fragment>JSXElement6</Fragment>,
+        }, 
+    ]
+  }
   ]
   
   const array = (element) => {
@@ -64,9 +73,6 @@ export const SectionLeyout3 = () => {
       }
       const quantityElementsInGroup = element.groupedJSXElements.length
       const basis = () => {
-        // const basis2 = (basisv) = {
-        //   if (basisv === 1) {return {}}
-        // }
         if (quantityElementsInGroup > 1 && quantityElementsInGroup <= 4 ) {
           return `basis-1/${quantityElementsInGroup}`
         } else if (quantityElementsInGroup === 1) {
