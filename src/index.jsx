@@ -15,7 +15,9 @@ import { TabsApp } from './pages/workshop/development/Tabs/TabsApp'
 import { _dropdown } from './pages/workshop/development/dropdown/_dropdown'
 
 import { Search } from './pages/workshop/development/Search'
-import { OtherIndex } from './pages/workshop/development/other/OtherIndex'
+import { SectionLeyout3 } from './pages/workshop/development/sectionLeyout3/SectionLeyout3'
+
+
 
 
 const Main = () => {
@@ -32,7 +34,8 @@ const Main = () => {
     {id: '_dropdown',category: 'development', app: <_dropdown />},
 
     {id: 'search', category: 'development', app: <Search />},
-    {id: 'other', category: 'development', app: <OtherIndex />}
+    {id: 'sectionLeyout3', category: 'development', app: <SectionLeyout3 />}
+
 
 
     // {id: 'test', category: 'test', app: <div>test</div>},
@@ -70,14 +73,14 @@ const Main = () => {
     // {id: 'sdfssd44d44d14fsd13dfsdf',category: 'projects', app: <div>asdasda</div>},
   ])
   return (
-    <React.StrictMode>
+    // <React.StrictMode>
       <ContextProjects.Provider value={{projects}}>
         <BrowserRouter>
             <App />
         </BrowserRouter>
       </ContextProjects.Provider>
-    </React.StrictMode>
-  )
+    // </React.StrictMode>
+  ) 
 }
 
 ReactDOM.createRoot(document.getElementById('app')).render(
