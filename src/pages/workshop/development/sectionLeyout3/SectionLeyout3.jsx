@@ -64,6 +64,7 @@ export const SectionLeyout3 = () => {
   
   const array = (element) => {
     if (element.groupedJSXElements) {
+      const quantityElementsInGroup = element.groupedJSXElements.length
       const Flex = ({children}) => {
         if (quantityElementsInGroup > 1 && quantityElementsInGroup <= 4 ) {
           return <div className='flex gap-x-2'>{children}</div>
@@ -71,7 +72,6 @@ export const SectionLeyout3 = () => {
           return <Fragment>{children}</Fragment>
         }
       }
-      const quantityElementsInGroup = element.groupedJSXElements.length
       const basis = () => {
         if (quantityElementsInGroup > 1 && quantityElementsInGroup <= 4 ) {
           return `basis-1/${quantityElementsInGroup}`
@@ -83,7 +83,7 @@ export const SectionLeyout3 = () => {
         <Flex>
           {element.groupedJSXElements.map(element => 
             <Fragment key={element.id}>
-              <div className={basis()} style={{order : `${element.order}`}}>
+              <div className={basis()} style={{order : `${element.order}`, display: 'block'}}>
                 <Spase element={element}>
                   {element.JSXElement}
                 </Spase>
