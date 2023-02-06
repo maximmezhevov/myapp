@@ -37,12 +37,24 @@ export const SectionLeyout3 = () => {
           bottomSpase: 'bottomSpase'
         }
       ]
+    },
+    { id: 'groupedJSXElements 4 5 6',
+      groupedJSXElements: [	
+        { id: 'JSXElement4',
+          JSXElement: <Fragment>JSXElement4</Fragment>,
+        }, 
+        { id: 'JSXElement5', 
+          JSXElement: <Fragment>JSXElement5</Fragment>,
+        },
+        { id: 'JSXElement6', 
+        JSXElement: <Fragment>JSXElement5</Fragment>,
+        }
+      ]
     }
   ]
   
   const array = (element) => {
     if (element.groupedJSXElements) {
-      const quantityElementsInGroup = element.groupedJSXElements.length
       const Flex = ({children}) => {
         if (quantityElementsInGroup > 1 && quantityElementsInGroup <= 4 ) {
           return <div className='flex gap-x-2'>{children}</div>
@@ -50,7 +62,11 @@ export const SectionLeyout3 = () => {
           return <Fragment>{children}</Fragment>
         }
       }
+      const quantityElementsInGroup = element.groupedJSXElements.length
       const basis = () => {
+        // const basis2 = (basisv) = {
+        //   if (basisv === 1) {return {}}
+        // }
         if (quantityElementsInGroup > 1 && quantityElementsInGroup <= 4 ) {
           return `basis-1/${quantityElementsInGroup}`
         } else if (quantityElementsInGroup === 1) {
