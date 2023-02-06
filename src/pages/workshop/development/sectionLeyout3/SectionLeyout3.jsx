@@ -19,7 +19,7 @@ export const SectionLeyout3 = () => {
       bottomSpase: 'bottomSpase Other1 and Other2',
       groupedJSXElements: [	
         { id: 'JSXElement2',
-          order: '',
+          order: 2,
           // height: 300,
           JSXElement: <Fragment>JSXElement2</Fragment>,
           heading: '',
@@ -28,7 +28,7 @@ export const SectionLeyout3 = () => {
           bottomSpase: 'bottomSpase'
         }, 
         { id: 'JSXElement3', 
-          order: '',
+          order: 1,
           // height: 300,
           JSXElement: <Fragment>JSXElement3</Fragment>,
           heading: '',
@@ -65,6 +65,7 @@ export const SectionLeyout3 = () => {
   const array = (element) => {
     if (element.groupedJSXElements) {
       const quantityElementsInGroup = element.groupedJSXElements.length
+      console.log(quantityElementsInGroup)
       const Flex = ({children}) => {
         if (quantityElementsInGroup > 1 && quantityElementsInGroup <= 4 ) {
           return <div className='flex gap-x-2'>{children}</div>
@@ -72,18 +73,31 @@ export const SectionLeyout3 = () => {
           return <Fragment>{children}</Fragment>
         }
       }
-      const basis = () => {
-        if (quantityElementsInGroup > 1 && quantityElementsInGroup <= 4 ) {
-          return `basis-1/${quantityElementsInGroup}`
-        } else if (quantityElementsInGroup === 1) {
-          return 'w-full'
-        }
+      // const basis = () => {
+      //   if (quantityElementsInGroup > 1 && quantityElementsInGroup <= 4 ) {
+      //     return `basis-1/${quantityElementsInGroup}`
+      //   } else if (quantityElementsInGroup === 1) {
+      //     return 'w-full'
+      //   }
+      // }
+      // const basis2 = () => {
+      //   if (quantityElementsInGroup > 1 && quantityElementsInGroup <= 4 ) {
+      //     return {flexBasis: `1${quantityElementsInGroup}%`}
+      //   } else if (quantityElementsInGroup === 1) {
+      //     return {width: '100%'}
+      //   }
+      // }
+      const basis2 = () => {
+        if      (quantityElementsInGroup === 1) return {width: '100%'}
+        else if (quantityElementsInGroup === 2) return {flexBasis: '50%'}
+        else if (quantityElementsInGroup === 3) return {flexBasis: '33.333%'}
+        else if (quantityElementsInGroup === 4) return {flexBasis: '25%'}
       }
       return (
         <Flex>
           {element.groupedJSXElements.map(element => 
             <Fragment key={element.id}>
-              <div className={basis()} style={{order : `${element.order}`, display: 'block'}}>
+              <div /* className={basis()}*/ style={{...basis2(), order : `${element.order}`}}>
                 <Spase element={element}>
                   {element.JSXElement}
                 </Spase>
@@ -96,9 +110,6 @@ export const SectionLeyout3 = () => {
   }
 
   const Spase = ({children, element}) => {
-    // const height = (heightElement) => {
-    //   return {height: `${heightElement}`}
-    // }
     const Border = ({children}) => {
       if (element.groupedJSXElements) {
         return <Fragment>{children}</Fragment>
