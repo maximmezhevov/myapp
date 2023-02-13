@@ -1,4 +1,4 @@
-import { createContext, Fragment, useContext, useState } from 'react'
+import { createContext, Fragment, useContext, useRef, useState } from 'react'
 import { ContextProjects } from './ContextProjects'
 import { Navigate, Route, Routes, Link, Outlet, useParams, useOutletContext } from 'react-router-dom'
 
@@ -7,6 +7,7 @@ import { Contacts } from './pages/Сontacts'
 
 import { AccordionApp } from './pages/workshop/development/Accordion/AccordionApp'
 import { useLayout } from './hooks/useLayout'
+import { Transition } from 'react-transition-group'
 
 
 
@@ -56,7 +57,7 @@ export const App = () => {
 const Layout = () => {
 	const [layout, setLayout] = useState(true)
 	return (
-		<div id='layout' className='relative flex m-10 gap-x-10'>
+		<div id='layout' className='relative flex m-10'>
 			<button onClick={() => setLayout(!layout)} className='absolute -top-6 right-0'>{layout ? 'close' : 'open'}</button>
 			<Nav layout={layout} />
 			<Outlet context={[layout]} />
@@ -66,17 +67,16 @@ const Layout = () => {
 
 const Nav = ({layout}) => {
 	const {projects} = useContext(ContextProjects)
-	const {heightNav} = useLayout()
 
-	const NavСategory = ({category}) => {
+	const navСategory = (category) => {
 		return (
-			<div id={category}>
+			<div id={category} >
 				{category !== 'pages' && <div role='heading' className='cursor-default'>{category}</div>}
 				<ul className={`${category !== 'pages' ? 'ml-3' : ''}`}> 
 					{ projects
 						.filter(project => project.category === category)
 						.map(project => 
-							<li key={project.id} className='hover:bg-blue-100 duration-500'>
+							<li key={project.id} className='hover:bg-blue-100 duration-[2000ms]'>
 								<Link to={project.id} className='block'>{project.id}</Link>
 							</li>
 						)
@@ -86,13 +86,32 @@ const Nav = ({layout}) => {
 		)
 	}
 
+	const {heightNav} = useLayout()
+	const navRef = useRef()
+	const duration = 1000; const width = 200; const marginRight = 0;
+  const defaultStyle = {
+		height: `${heightNav}px`, 
+		position: 'sticky', top: '40px', 
+		display: 'flex', flexDirection: 'column', rowGap: '10px', 
+		transition: `${duration}ms ease`
+	}
+  const transitionStyles = {
+    entering: {width: `${width}px`, marginRight: `${marginRight}px`, transform: 'translate(0)'}, 									// 1
+    entered:  {width: `${width}px`, marginRight: `${marginRight}px`, transform: 'translate(0)'}, 									// 2 ...defaultStyle
+    exiting:  {width: '0', 					marginRight: '0', 							 transform: `translate(-${width}px, -34px)`},	// 3
+		exited:   {width: '0', 					marginRight: '0', 							 transform: `translate(-${width}px, -34px)`}	// 0
+  }
+
 	return (
-		<nav className={`sticky top-10 flex flex-col gap-y-[10px] ${layout ? 'w-52 min-w-52' : 'w-0 opacity-0 -translate-x-52 overflow-hidden'} duration-500`}
-		style={{height: heightNav}}>
-			<NavСategory category='pages' />
-			<NavСategory category='projects' />
-			<NavСategory category='development' />
-		</nav>
+		<Transition nodeRef={navRef} in={layout} timeout={duration} unmountOnExit>
+			{state => (
+				<nav ref={navRef} style={{...defaultStyle, ...transitionStyles[state]}}>
+					{navСategory('pages')}
+					{navСategory('projects')}
+					{navСategory('development')}
+				</nav>
+			)}
+		</Transition>
 	)
 }
 
@@ -105,7 +124,7 @@ const Nav = ({layout}) => {
 			.filter(project => project.id === id)
 			.map(project => 
 				<div key={project.id} className='min-w-[768px] w-[768px] flex flex-col gap-y-[10px]'>
-					<header className={`${layout ? 'h-6' : 'h-0 opacity-0 -translate-y-52 overflow-hidden'} duration-500`}>
+					<header className={`${layout ? 'h-6' : 'h-0 opacity-0 -translate-x-12 -translate-y-12 overflow-hidden'} duration-[1000ms]`}>
 						<h1>{id}</h1>
 					</header>
 					{project.JSXElement}
