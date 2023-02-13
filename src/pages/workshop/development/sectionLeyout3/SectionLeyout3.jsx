@@ -7,25 +7,25 @@ export const SectionLeyout3 = () => {
       order: '',
       // height: 300, 
       heading: '',
-      description: 'description',
-      topSpase: 'topSpase',
-      bottomSpase: 'bottomSpase'
+      description: '',
+      topSpace: 'topSpace',
+      bottomSpace: 'bottomSpace'
     },
-    { id: 'groupedJSXElements 2 3',
+    { id: 'children [{... JSXElement2 ...}, {... JSXElement3 ...}]',
       order: 3,
       heading: '',
-      description: 'description Other1 and Other2',
-      topSpase: 'topSpase Other1 and Other2',
-      bottomSpase: 'bottomSpase Other1 and Other2',
-      groupedJSXElements: [	
+      description: 'description',
+      topSpace: 'topSpace',
+      bottomSpace: 'bottomSpace',
+      children: [	
         { id: 'JSXElement2',
           order: 2,
           // height: 300,
           JSXElement: <Fragment>JSXElement2</Fragment>,
           heading: '',
           description: 'description',
-          topSpase: 'topSpase',
-          bottomSpase: 'bottomSpase'
+          topSpace: 'topSpace',
+          bottomSpace: 'bottomSpace'
         }, 
         { id: 'JSXElement3', 
           order: 1,
@@ -33,14 +33,14 @@ export const SectionLeyout3 = () => {
           JSXElement: <Fragment>JSXElement3</Fragment>,
           heading: '',
           description: 'description',
-          topSpase: 'topSpase',
-          bottomSpase: 'bottomSpase'
+          topSpace: 'topSpace',
+          bottomSpace: 'bottomSpace'
         }
       ]
     },
-    { id: 'groupedJSXElements 4 5 6',
+    { id: 'children [{... JSXElement4 ...}, {... JSXElement5 ...}, {... JSXElement6 ...}]',
       order: 4,
-      groupedJSXElements: [	
+      children: [	
         { id: 'JSXElement4',
           JSXElement: <Fragment>JSXElement4</Fragment>,
         }, 
@@ -48,56 +48,66 @@ export const SectionLeyout3 = () => {
           JSXElement: <Fragment>JSXElement5</Fragment>,
         },
         { id: 'JSXElement6', 
-        JSXElement: <Fragment>JSXElement5</Fragment>,
+        JSXElement: <Fragment>JSXElement6</Fragment>,
         }
       ]
     },
-    { id: 'groupedJSXElements 6',
+    { id: 'children [{... JSXElement7 ...}]',
       order: 2,
-      groupedJSXElements: [	
-        { id: 'JSXElement6',
-          JSXElement: <Fragment>JSXElement6</Fragment>,
+      children: [	
+        { id: 'JSXElement7',
+          JSXElement: <Fragment>JSXElement7</Fragment>,
         }, 
-    ]
-  }
+      ]
+    }
   ]
+
+  return <Article array={applications} />
+}
+
+export const Article = ({array}) => {
+  const arrayInitialization = () => {
+    return (
+      <div className='flex flex-col gap-y-2'>
+        {array.map(element => 
+          <section key={element.id} style={{order : `${element.order}`}}>
+            <Spase element={element}>
+              {childrenElementInitialization(element)}
+            </Spase>
+          </section>
+        )}
+      </div>
+    )
+  }
   
-  const array = (element) => {
-    if (element.groupedJSXElements) {
-      const quantityElementsInGroup = element.groupedJSXElements.length
-      console.log(quantityElementsInGroup)
+  const childrenElementInitialization = (element) => {
+    if (element.children) {
+      const amountChildElementsInChildren = element.children.length
       const Flex = ({children}) => {
-        if (quantityElementsInGroup > 1 && quantityElementsInGroup <= 4 ) {
+        if (amountChildElementsInChildren > 1 && amountChildElementsInChildren <= 4 ) {
           return <div className='flex gap-x-2'>{children}</div>
-        } else if (quantityElementsInGroup === 1) {
+        } else if (amountChildElementsInChildren === 1) {
           return <Fragment>{children}</Fragment>
         }
       }
-      // const basis = () => {
+      // const basis = () => { // ? некорректно работает basis-1/2 после коммита и автодеплоя на vercel (basis-1/3, basis-1/4 и basis-full(w-full) работают корректно
       //   if (quantityElementsInGroup > 1 && quantityElementsInGroup <= 4 ) {
       //     return `basis-1/${quantityElementsInGroup}`
       //   } else if (quantityElementsInGroup === 1) {
       //     return 'w-full'
       //   }
       // }
-      // const basis2 = () => {
-      //   if (quantityElementsInGroup > 1 && quantityElementsInGroup <= 4 ) {
-      //     return {flexBasis: `1${quantityElementsInGroup}%`}
-      //   } else if (quantityElementsInGroup === 1) {
-      //     return {width: '100%'}
-      //   }
-      // }
-      const basis2 = () => {
-        if      (quantityElementsInGroup === 1) return {width: '100%'}
-        else if (quantityElementsInGroup === 2) return {flexBasis: '50%'}
-        else if (quantityElementsInGroup === 3) return {flexBasis: '33.333%'}
-        else if (quantityElementsInGroup === 4) return {flexBasis: '25%'}
+      const basis2 = () => { // ! basis2(style) работает корректно
+        if      (amountChildElementsInChildren === 1) return {width: '100%'}
+        else if (amountChildElementsInChildren === 2) return {flexBasis: '50%'}
+        else if (amountChildElementsInChildren === 3) return {flexBasis: '33.333%'}
+        else if (amountChildElementsInChildren === 4) return {flexBasis: '25%'}
       }
       return (
         <Flex>
-          {element.groupedJSXElements.map(element => 
+          {element.children.map(element => 
             <Fragment key={element.id}>
-              <div /* className={basis()}*/ style={{...basis2(), order : `${element.order}`}}>
+              <div style={{...basis2(), order : `${element.order}`}} /* className={basis()}*/> 
                 <Spase element={element}>
                   {element.JSXElement}
                 </Spase>
@@ -111,32 +121,24 @@ export const SectionLeyout3 = () => {
 
   const Spase = ({children, element}) => {
     const Border = ({children}) => {
-      if (element.groupedJSXElements) {
+      if (element.children) {
         return <Fragment>{children}</Fragment>
-      } return <div style={{height: `${element.height}px`}} className='border dark:border-[#444] py-1 px-2'>{children}</div>
+      } return <div style={{height: `${element.height}px`}} className='border rounded-[15px] dark:border-[#444] p-2 my-2'>{children}</div>
     }
     return (
       <>
-        <header>
-          <h3 className='bg-violet-900'>{element.heading === '' || element.heading === undefined ? element.id : element.heading}</h3>
-          {element.description && <div className='bg-blue-900'>{element.description}</div>}
-        </header>
-        {element.topSpase && <div className='bg-red-900'>{element.topSpase}</div>}
-        <Border>{children}</Border>
-        {element.bottomSpase && <div className='bg-green-900'>{element.bottomSpase}</div>}
+        <div className='border-l dark:border-[#444] pl-3'>
+          <header>
+            <h2 className=''>{element.heading === '' || element.heading === undefined ? element.id : element.heading}</h2>
+            {element.description && <div>{element.description}</div>}
+          </header>
+          {element.topSpace && <div>{element.topSpace}</div>}
+          <Border>{children}</Border>
+          {element.bottomSpace && <div>{element.bottomSpace}</div>}
+        </div>
       </>
     )
   }
 
-  return (
-    <div className='flex flex-col gap-y-2'>
-      {applications.map(element => 
-        <section key={element.id} style={{order : `${element.order}`}}>
-          <Spase element={element}>
-            {array(element)}
-          </Spase>
-        </section>
-      )}
-    </div>
-  )
+  return (arrayInitialization())
 }

@@ -9,11 +9,11 @@ export const useLayout = () => {
 		return () => {window.removeEventListener('resize', resizewindowInnerHeight)}
 	}, [])
 
-	const HeightCategoryNavList = windowInnerHeight - ((24 * 4 + (8 * 5)) + (24 * 2)) 
+	const heightNav  = windowInnerHeight - 80 
 
 	return {
 		windowInnerHeight,
 		// windowInnerHeight: {height: windowInnerHeight},
-		HeightCategoryNavList
+		heightNav,
 	}
 }

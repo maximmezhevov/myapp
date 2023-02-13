@@ -9,7 +9,9 @@ export const ProjectItem = () => {
     <>
       {[...projects]
         .filter(project => project.id === id)
-        .map(project => <Fragment key={project.id}>{project.app}</Fragment>)
+        .map(project => <Fragment key={project.id}>
+          {project.app}
+        </Fragment>)
       }
     </>
   )

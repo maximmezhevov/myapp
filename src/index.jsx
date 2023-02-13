@@ -5,20 +5,18 @@ import { App } from './App'
 import { BrowserRouter } from 'react-router-dom'
 
 import { useState } from 'react'
-import { ContextProjects } from './ContextProjects' 
+// import { ContextProjects } from './ContextProjects' 
 
 import { About } from './pages/About'
 import { Contacts } from './pages/Сontacts'
 import { TodoProps } from './pages/workshop/projects/todoProps/TodoProps'
 import { AccordionApp } from './pages/workshop/development/Accordion/AccordionApp'
 import { TabsApp } from './pages/workshop/development/Tabs/TabsApp'
-import { _dropdown } from './pages/workshop/development/dropdown/_dropdown'
 
 import { Search } from './pages/workshop/development/Search'
 import { SectionLeyout3 } from './pages/workshop/development/sectionLeyout3/SectionLeyout3'
-
-
-
+import { SectionLeyout4 } from './pages/workshop/development/sectionLeyout4/SectionLeyout4'
+import { _dropdown } from './pages/workshop/development/dropdown/_dropdown'
 
 const Main = () => {
   const [projects] = useState([
@@ -31,11 +29,11 @@ const Main = () => {
 
     {id: 'accordion', category: 'development', app: <AccordionApp />},
     {id: 'tabs', category: 'development', app: <TabsApp /> },
-    {id: '_dropdown',category: 'development', app: <_dropdown />},
 
     {id: 'search', category: 'development', app: <Search />},
-    {id: 'sectionLeyout3', category: 'development', app: <SectionLeyout3 />}
-
+    {id: 'sectionLeyout3', category: 'development', app: <SectionLeyout3 />},
+    {id: 'sectionLeyout4', category: 'development', app: <SectionLeyout4 />},
+    {id: '_dropdown',category: 'development', app: <_dropdown />},
 
 
     // {id: 'test', category: 'test', app: <div>test</div>},
@@ -74,15 +72,18 @@ const Main = () => {
   ])
   return (
     // <React.StrictMode>
-      <ContextProjects.Provider value={{projects}}>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
-      </ContextProjects.Provider>
+      // <ContextProjects.Provider value={{projects}}>
+      //   <BrowserRouter>
+      //       <App />
+      //   </BrowserRouter>
+      // </ContextProjects.Provider>
     // </React.StrictMode>
+    <></>
   ) 
 }
 
 ReactDOM.createRoot(document.getElementById('app')).render(
-  <Main />
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
 )
