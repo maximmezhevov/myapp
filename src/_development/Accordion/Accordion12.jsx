@@ -1,6 +1,6 @@
 import { useContext, useRef, useState } from 'react'
 import { Transition } from 'react-transition-group'
-import { ContextProjects } from '../../../../ContextProjects'
+import { ContextProjects } from '../../contexts/ContextProjects'
 // import { useCategory } from '../hooks/useCategory'
 
 export const Accordion12 = () => {
