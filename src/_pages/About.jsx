@@ -1,7 +1,8 @@
 export const About = () => {
   return(
     <div>
-      about
+      <div>about</div>
+      <div>about</div>
     </div>
   )
 }
