@@ -1,9 +1,10 @@
-import { Fragment, useContext, useEffect, useRef, useState } from 'react'
+import { Fragment, useContext, useRef, useState } from 'react'
 import { ContextProjects } from './contexts/ContextProjects'
 import { Navigate, Route, Routes, Link, Outlet, useParams, useOutletContext } from 'react-router-dom'
 
 import { useLayout } from './hooks/useLayout'
 import { Transition } from 'react-transition-group'
+import './components/cssTransition.css'
 
 import { About } from './_pages/About'
 import { Contacts } from './_pages/Сontacts'
@@ -72,32 +73,26 @@ export const App = () => {
 const Layout = () => {
 	const [layout, setLayout] = useState(true)
 	const [dropdownNav, setDropdownNav] = useState(false)
-	console.log(dropdownNav)
 	return (
 		<div id='layout' className='flex m-10'>
-			<Nav layout={layout} dropdownNav={dropdownNav}>
-				<NavСategory category='pages' />
-				<NavСategory category='projects' />
-				<NavСategory category='development' />
-			</Nav>
-			<button onClick={() => (
-				(!layout && dropdownNav)
-					? (setDropdownNav(false), setTimeout(() => {setLayout(!layout)}, '500'))
-					: setLayout(!layout)
-			  )} 
-				className={
-				`${ layout 
-						? 'absolute top-[42px] left-[250px] rotate-0' 
-						: 'fixed top-[10px] left-[10px] rotate-180'
-				} duration-500`}
-				disabled={dropdownNav}>
+			<button  onClick={() =>
+				((!layout && dropdownNav)
+						? (setDropdownNav(false), setTimeout(() => {setLayout(!layout)}, '500'))
+						: setLayout(!layout)
+				)} 
+				className={`fixed top-[10px] left-[10px] ${!layout && 'rotate-180'} duration-500`}> 
 				<svg className='w-[21px] h-5'
 				xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
 					<path fillRule="evenodd" d="M14.78 14.78a.75.75 0 01-1.06 0L6.5 7.56v5.69a.75.75 0 01-1.5 0v-7.5A.75.75 0 015.75 5h7.5a.75.75 0 010 1.5H7.56l7.22 7.22a.75.75 0 010 1.06z" clipRule="evenodd" />
 				</svg>
 			</button>
+			<Nav layout={layout}>
+				<NavСategory category='pages' />
+				<NavСategory category='projects' />
+				<NavСategory category='development' />
+			</Nav>
 			<DropdownNavButton layout={layout} dropdownNav={dropdownNav} setDropdownNav={setDropdownNav}/>
-			<DropdownNav dropdownNav={dropdownNav} setDropdownNav={setDropdownNav}>
+			<DropdownNav dropdownNav={dropdownNav}>
 				<NavСategory category='pages' />
 				<NavСategory category='projects' />
 				<NavСategory category='development' />
@@ -107,57 +102,25 @@ const Layout = () => {
 	)
 }
 
-// const NavANDdrop = ({layout, dropdownNav, children}) => {
-// 	const {heightNav} = useLayout()
-// 	const navRef = useRef()
-// 	const duration = 500
-//   const defaultStyle = {
-// 		height: `${heightNav}px`, position: 'sticky', top: '40px', display: 'flex', flexDirection: 'column', rowGap: '10px', transition: `${duration}ms`
-// 	}
-// 	const position = () => {
-// 		if (dropdownNav) return 'fixed'
-// 	}
-
-// 	const dropdownNavDefaultStyle = () => {if (dropdownNav) return {
-// 		backgroundColor: 'white', border: '1px solid red', padding: '10px', borderRadius: '20px'
-// 	};	return {}}
-// 	// const transform = () => {if (dropdownNav) return '-34px'; return '0'}
-
-//   const transitionStyles = {
-// 		exited:   {width: '0', marginRight: '0', transform: `translate(-210px)`, opacity: '0', position: `${position()}`},
-//     entering: {width: '200px', marginRight: '30px', transform: 'translate(0)', opacity: '1', position: `${position()}`},
-//     entered:  {width: '200px', marginRight: '30px', transform: 'translate(0)', opacity: '1', position: `${position()}`},
-//     exiting:  {width: '0', marginRight: '0', transform: `translate(-210px)`, opacity: '0', position: `${position()}`}
-//   }
-
-// 	return (
-// 		<Transition nodeRef={navRef} in={layout || dropdownNav} timeout={duration} unmountOnExit>
-// 			{state => (
-// 				<nav ref={navRef} style={{...defaultStyle, ...dropdownNavDefaultStyle(), ...transitionStyles[state]}}>
-// 					{children}
-// 				</nav>
-// 			)}
-// 		</Transition>
-// 	)
-// }
-
 const Nav = ({layout, children}) => {
-	const {heightNav} = useLayout()
 	const navRef = useRef()
 	const duration = 500
+	const {heightNav} = useLayout(); const height = {height: `${heightNav}px`}
   const defaultStyle = {
-		height: `${heightNav}px`, position: 'sticky', top: '40px', display: 'flex', flexDirection: 'column', rowGap: '10px', transition: `${duration}ms`
+		transition: `${duration}ms`
+		// position: 'sticky', top: '40px', display: 'flex', flexDirection: 'column', rowGap: '10px'
 	}
   const transitionStyles = {
-		exited:   {width: '0', marginRight: '0', transform: `translate(-210px, -34px`, opacity: '0'},
-    entering: {width: '200px', marginRight: '40px', transform: 'translate(0)', opacity: '1'},
-    entered:  {width: '200px', marginRight: '40px', transform: 'translate(0)', opacity: '1'},
-    exiting:  {width: '0', marginRight: '0', transform: `translate(-210px, -34px`, opacity: '0'}
+		exited:   { width: '0', transform: 'translate(-220px, -24px)', marginRight: '0', /*opacity: '0'*/},
+    entering: { width: '200px', transform: 'translate(0)', marginRight: '20px', /*opacity: '1'*/},
+    entered:  { width: '200px', transform: 'translate(0)', marginRight: '20px', /*opacity: '1'*/},
+    exiting:  { width: '0', transform: 'translate(-220px, -24px)', marginRight: '0', /*opacity: '0'*/}
   }
 	return (
 		<Transition nodeRef={navRef} in={layout} timeout={duration} unmountOnExit>
 			{state => (
-				<nav ref={navRef} style={{...defaultStyle, ...transitionStyles[state]}}>
+				<nav ref={navRef} style={{...height, ...defaultStyle, ...transitionStyles[state]}} 
+				className='sticky top-[40px] flex flex-col gap-y-[10px]'>
 					{children}
 				</nav>
 			)}
@@ -166,20 +129,17 @@ const Nav = ({layout, children}) => {
 }
 
 const NavСategory = ({category}) => {
-	const {projects} = useContext(ContextProjects)
-
+	const { projects } = useContext(ContextProjects)
 	return (
-		<div id={category} >
+		<div id={category}>
 			{category !== 'pages' && <div role='heading' className='cursor-default'>{category}</div>}
-			<ul className={`${category !== 'pages' ? 'ml-3' : ''}`}> 
-				{ projects
+			<ul className={`${category !== 'pages' ? 'ml-3' : ''}`}>
+				{projects
 					.filter(project => project.category === category)
-					.map(project => 
-						<li key={project.id}>
-							<Link to={project.id} className='block'>{project.id}</Link>
-						</li>
-					)
-				}
+					.map(project => <li key={project.id}>
+						<Link to={project.id} className='block'>{project.id}</Link>
+					</li>
+					)}
 			</ul>
 		</div>
 	)
@@ -188,7 +148,10 @@ const NavСategory = ({category}) => {
 const DropdownNavButton = ({layout, dropdownNav, setDropdownNav}) => {
 	const dropdownNavButtonRef = useRef()
 	const duration = 500
-  const defaultStyle = {position: 'fixed', top: '42px', left: '10px', transition: `${duration}ms`}
+  const defaultStyle = {
+		transition: `${duration}ms`
+		// position: 'fixed', top: '42px', left: '10px'
+	}
 
 	// const ... = dropdownNav ? {transform: 'rotate(180deg)'} : {transform: 'rotate(0)'}
 	// const ... = dropdownNav && {transform: 'rotate(180deg)'}
@@ -196,16 +159,15 @@ const DropdownNavButton = ({layout, dropdownNav, setDropdownNav}) => {
 	// const ... = {transform: `rotate(${dropdownNav && 180}deg)`}
 
   const transitionStyles = {
-		exited:   {opacity: '0', transform: 'translate(-22px)'},
-    entering: {opacity: '1', transform: 'translate(0)'},
-    // entered:  {opacity: '1', transform: `${dropdownNav ? 'translate(220px, -30px) rotateY(180deg)' : 'translate(0)'}`},
-		entered:  {opacity: '1', transform: `translate(0)`},
-    exiting:  {opacity: '0', transform: 'translate(-22px)'}
+		exited:   {transform: 'translate(-28px)', opacity: '0'},
+    entering: {transform: 'translate(0)', opacity: '1'}, 
+    entered:  {transform: `${dropdownNav ? 'rotateY(180deg)' : 'translate(0)'}`, opacity: '1'},
+    exiting:  {transform: 'translate(-28px)', opacity: '0',}
   }
 	return (
 		<Transition nodeRef={dropdownNavButtonRef} in={!layout} timeout={duration} unmountOnExit>
 			{ state => (
-				<button ref={dropdownNavButtonRef} onClick={() => setDropdownNav(!dropdownNav)} style={{...defaultStyle, ...transitionStyles[state]}}>
+				<button ref={dropdownNavButtonRef} onClick={() => setDropdownNav(!dropdownNav)} style={{...defaultStyle, ...transitionStyles[state]}} className='fixed top-[42px] left-[10px]'>
 					<svg className='w-5 h-5'
 					xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
 						<path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clipRule="evenodd" />
@@ -216,37 +178,25 @@ const DropdownNavButton = ({layout, dropdownNav, setDropdownNav}) => {
 	)
 }
 
-const DropdownNav = ({dropdownNav, setDropdownNav, children}) => {
-	const {windowInnerHeight} = useLayout()
-	const resultwindowInnerHeight = windowInnerHeight - 8
+const DropdownNav = ({dropdownNav, children}) => {
 	const dropdownNavRef = useRef()
 	const duration = 500
+	const {windowInnerHeight} = useLayout(); const height = windowInnerHeight - 60
   const defaultStyle = {
-		height: `${resultwindowInnerHeight}px`, // width: '220px', position: 'fixed', top: '40px', display: 'flex', flexDirection: 'column', rowGap: '10px', transition: `${duration}ms`, backgroundColor: 'white', padding: '10px', border: '1px solid black'
-	}  
+		transition: `${duration}ms`
+		// width: '220px', position: 'fixed', top: '10px', display: 'flex', flexDirection: 'column', rowGap: '10px'
+	}
 	const transitionStyles = {
 		exited:   {transform: 'translateX(-260px)'},
     entering: {transform: 'translate(0)'},
     entered:  {transform: `translate(0)`},
     exiting:  {transform: 'translateX(-260px)'}
   }
-	useEffect(() => {
-    const OutsideClick = (event) => {
-			if (!dropdownNavRef.current.contains(event.target)) setDropdownNav(false)
-    }
-
-    document.addEventListener('mousedown', OutsideClick)
-    return() => {
-      document.removeEventListener('mousedown', OutsideClick)
-    } 
-  }, [])
+	// const width = 220
 	return (
 		<Transition nodeRef={dropdownNavRef} in={dropdownNav} timeout={duration} unmountOnExit>
 			{ state => (
-				<nav ref={dropdownNavRef} 
-				style={{...defaultStyle, ...transitionStyles[state]}}
-				// className='absolute top-[27px] bg-white border p-3 shadow'
-				className='w-[220px] fixed top-1 left-1 flex flex-col gap-y-[10px] duration-500 bg-white p-[10px] border rounded-[10px] shadow-lg'>
+				<nav ref={dropdownNavRef} style={{height: `${height}px`, ...defaultStyle, ...transitionStyles[state]}} className={`w-[220px] fixed top-[30px] flex flex-col gap-y-[10px] bg-white p-[10px] border rounded-[10px] shadow-md`}> {/* w-[${width}px] */}
 					{children}
 				</nav>
 			)}
@@ -259,20 +209,20 @@ const ProjectLayout = () => {
 	const [layout] = useOutletContext();
 	const headerRef = useRef()
 	const duration = 500
-	// const defaultStyle = {transition: `${duration}ms`}
+	const defaultStyle = {
+		transition: `${duration}ms`
+	}
   const transitionStyles = {
-		exited:   {height: '0', marginBottom: '0', transform: `translate(-1px, -24px)`, opacity: '0'},
+		exited:   {height: '0', marginBottom: '0', transform: 'translate(-1px, -24px)', opacity: '0'},
     entering: {height: '24px', marginBottom: '0', transform: 'translate(0)', opacity: '1'},
     entered:  {height: '24px', marginBottom: '0', transform: 'translate(0)', opacity: '1'},
-    exiting:  {height: '0', marginBottom: '0', transform: `translate(-1px, -24px)`, opacity: '0'}
+    exiting:  {height: '0', marginBottom: '0', transform: 'translate(-1px, -24px)', opacity: '0'}
   }
 	return (
 		<div className='min-w-[768px] w-[768px] flex flex-col'>
 			<Transition nodeRef={headerRef} in={layout} timeout={duration} unmountOnExit>
 				{state => (
-					<header ref={headerRef} 
-						style={{/*...defaultStyle,*/ ...transitionStyles[state]}} 
-						className='duration-500'>
+					<header ref={headerRef} style={{...defaultStyle, ...transitionStyles[state]}}>
 						<h1>{id}</h1>
 					</header>
 				)}
