@@ -7,7 +7,9 @@ export const OutsideClick1 = () => {
 
   useEffect(() => {
     const OutsideClick = (event) => {
-      if (!DropdownRef.current.contains(event.target)) setDropdown(false)
+      if (!DropdownRef.current.contains(event.target)) 
+      setDropdown(false)
+      // console.log(DropdownRef.current)
     }
 
     document.addEventListener('mousedown', OutsideClick)

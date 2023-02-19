@@ -1,4 +1,4 @@
-import { Fragment, useContext, useRef, useState } from 'react'
+import { Fragment, useContext, useEffect, useRef, useState } from 'react'
 import { ContextProjects } from './contexts/ContextProjects'
 import { Navigate, Route, Routes, Link, Outlet, useParams, useOutletContext } from 'react-router-dom'
 
@@ -73,6 +73,7 @@ export const App = () => {
 const Layout = () => {
 	const [layout, setLayout] = useState(true)
 	const [dropdownNav, setDropdownNav] = useState(false)
+	const dropdownNavButtonRef = useRef(null)
 	return (
 		<div id='layout' className='flex m-10'>
 			<button  onClick={() =>
@@ -91,11 +92,11 @@ const Layout = () => {
 				<NavСategory category='projects' />
 				<NavСategory category='development' />
 			</Nav>
-			<DropdownNavButton layout={layout} dropdownNav={dropdownNav} setDropdownNav={setDropdownNav}/>
-			<DropdownNav dropdownNav={dropdownNav}>
-				<NavСategory category='pages' />
-				<NavСategory category='projects' />
-				<NavСategory category='development' />
+			<DropdownNavButton layout={layout} dropdownNav={dropdownNav} setDropdownNav={setDropdownNav} dropdownNavButtonRef={dropdownNavButtonRef}/>
+			<DropdownNav dropdownNav={dropdownNav} setDropdownNav={setDropdownNav} dropdownNavButtonRef={dropdownNavButtonRef}>
+				<NavСategory category='pages' setDropdownNav={setDropdownNav}/>
+				<NavСategory category='projects' setDropdownNav={setDropdownNav}/>
+				<NavСategory category='development' setDropdownNav={setDropdownNav}/>
 			</DropdownNav>
 			<Outlet context={[layout]} /> {/* ProjectLayout */} 
 		</div>
@@ -103,7 +104,7 @@ const Layout = () => {
 }
 
 const Nav = ({layout, children}) => {
-	const navRef = useRef()
+	const navRef = useRef(null)
 	const duration = 500
 	const {heightNav} = useLayout(); const height = {height: `${heightNav}px`}
   const defaultStyle = {
@@ -128,7 +129,12 @@ const Nav = ({layout, children}) => {
 	)
 }
 
-const NavСategory = ({category}) => {
+const NavСategory = ({category, setDropdownNav}) => {
+	const onClick = (setDropdownNav) => {
+		if (setDropdownNav !== undefined) {
+			setDropdownNav(false)
+		}
+	}
 	const { projects } = useContext(ContextProjects)
 	return (
 		<div id={category}>
@@ -137,7 +143,7 @@ const NavСategory = ({category}) => {
 				{projects
 					.filter(project => project.category === category)
 					.map(project => <li key={project.id}>
-						<Link to={project.id} className='block'>{project.id}</Link>
+						<Link to={project.id} className='block' onClick={() => onClick(setDropdownNav)}>{project.id}</Link>
 					</li>
 					)}
 			</ul>
@@ -145,8 +151,7 @@ const NavСategory = ({category}) => {
 	)
 }
 
-const DropdownNavButton = ({layout, dropdownNav, setDropdownNav}) => {
-	const dropdownNavButtonRef = useRef()
+const DropdownNavButton = ({layout, dropdownNav, setDropdownNav, dropdownNavButtonRef}) => {
 	const duration = 500
   const defaultStyle = {
 		transition: `${duration}ms`
@@ -166,7 +171,7 @@ const DropdownNavButton = ({layout, dropdownNav, setDropdownNav}) => {
   }
 	return (
 		<Transition nodeRef={dropdownNavButtonRef} in={!layout} timeout={duration} unmountOnExit>
-			{ state => (
+			{state => (
 				<button ref={dropdownNavButtonRef} onClick={() => setDropdownNav(!dropdownNav)} style={{...defaultStyle, ...transitionStyles[state]}} className='fixed top-[42px] left-[10px]'>
 					<svg className='w-5 h-5'
 					xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -178,8 +183,8 @@ const DropdownNavButton = ({layout, dropdownNav, setDropdownNav}) => {
 	)
 }
 
-const DropdownNav = ({dropdownNav, children}) => {
-	const dropdownNavRef = useRef()
+const DropdownNav = ({dropdownNav, setDropdownNav, dropdownNavButtonRef, children}) => {
+	const dropdownNavRef = useRef(null)
 	const duration = 500
 	const {windowInnerHeight} = useLayout(); const height = windowInnerHeight - 60
   const defaultStyle = {
@@ -193,9 +198,25 @@ const DropdownNav = ({dropdownNav, children}) => {
     exiting:  {transform: 'translateX(-260px)'}
   }
 	// const width = 220
+	
+	useEffect(() => {
+		const outsideClick = (event) => {
+			if (dropdownNavRef.current) {
+				if (!dropdownNavRef.current.contains(event.target) && !dropdownNavButtonRef.current.contains(event.target)) {
+					setDropdownNav(false)
+				}
+			}
+		}
+		
+		document.addEventListener('click', outsideClick);
+    return () => {
+      document.removeEventListener('click', outsideClick);
+    }
+	}, [dropdownNav, setDropdownNav])
+
 	return (
 		<Transition nodeRef={dropdownNavRef} in={dropdownNav} timeout={duration} unmountOnExit>
-			{ state => (
+			{state => (
 				<nav ref={dropdownNavRef} style={{height: `${height}px`, ...defaultStyle, ...transitionStyles[state]}} className={`w-[220px] fixed top-[30px] flex flex-col gap-y-[10px] bg-white p-[10px] border rounded-[10px] shadow-md`}> {/* w-[${width}px] */}
 					{children}
 				</nav>
