@@ -3,18 +3,19 @@ import { useRef, useState } from 'react'
 
 export const OutsideClick1 = () => {
   const [dropdown, setDropdown] = useState(false)
-  const DropdownRef = useRef()
+  const DropdownRef = useRef(null)
 
   useEffect(() => {
-    const OutsideClick = (event) => {
-      if (!DropdownRef.current.contains(event.target)) 
-      setDropdown(false)
-      // console.log(DropdownRef.current)
+    const outsideClick = (event) => {
+      if (!DropdownRef.current.contains(event.target)) {
+        // console.log('outside clicked')
+        setDropdown(false)
+      } // else console.log('inside clicked')
     }
 
-    document.addEventListener('mousedown', OutsideClick)
+    document.addEventListener('click', outsideClick)
     return() => {
-      document.removeEventListener('mousedown', OutsideClick)
+      document.removeEventListener('click', outsideClick)
     } 
   }, [])
 

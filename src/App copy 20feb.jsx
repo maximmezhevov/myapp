@@ -1,6 +1,6 @@
 import { Fragment, useContext, useEffect, useRef, useState } from 'react'
 import { ContextProjects } from './contexts/ContextProjects'
-import { Navigate, Route, Routes, Link, Outlet, useParams, useOutletContext, useLocation } from 'react-router-dom'
+import { Navigate, Route, Routes, Link, Outlet, useParams, useOutletContext } from 'react-router-dom'
 
 import { useLayout } from './hooks/useLayout'
 import { Transition } from 'react-transition-group'
@@ -18,6 +18,22 @@ import { _router } from './_development/router/_router'
 
 
 export const App = () => {
+	// const element = useRoutes([ 
+	// 	{path: '/', element: <Navigate to='workshop/about' />},
+	// 	{path: 'workshop', 
+	// 		element: <Workshop/>,
+	// 		children: [
+	// 			{index: true, element: <Navigate to='about' />},
+	// 			{path: ':id', element: <ProjectItemLayout />, 
+	// 				children: [
+	// 					{index: true, element: <ProjectItem/>},
+	// 				]
+	// 			},
+	// 		]
+	// 	},
+	// 	// {path: '*', element: /*<Navigate to='workshop/about' />*/ <div>404</div>}
+	// ])
+
 	const projects = [
 		{id: 'about', JSXElement: <About />, category: 'pages'},
 		{id: 'contacts', JSXElement: <Contacts />, category: 'pages'},
@@ -32,18 +48,17 @@ export const App = () => {
     {id: 'sectionLeyout3', JSXElement: <SectionLeyout3 />, category: 'development'},
     {id: 'sectionLeyout4', JSXElement: <SectionLeyout4 />, category: 'development'},
     {id: '_dropdown', JSXElement: <_dropdown />, category: 'development'},
-		{id: 'router', category: 'development'},
+		{id: 'router', JSXElement: <_router />, category: 'development'},
 	]
 
 	const Router = () => {
 		return (
 			<Routes>
 				<Route path='/' element={<Layout />}>
-					<Route index element={<Navigate to='about' />}/>
+					<Route index element={<Navigate to='/about' />} />
 					<Route path=':id' element={<ProjectLayout />}>
 						<Route index element={<ProjectItem />}/>
 					</Route>
-					<Route path='router/*' element={<ProjectLayout><_router /></ProjectLayout>}/>
 				</Route>
 			</Routes>
 		)
@@ -212,10 +227,8 @@ const DropdownNav = ({dropdownNav, setDropdownNav, dropdownNavButtonRef, childre
 	)
 }
 
-const ProjectLayout = ({children}) => {
+const ProjectLayout = () => {
 	const {id} = useParams()
-	const location = useLocation()
-
 	const [layout] = useOutletContext();
 	const headerRef = useRef()
 	const duration = 500
@@ -228,17 +241,16 @@ const ProjectLayout = ({children}) => {
     entered:  {height: '24px', marginBottom: '0', transform: 'translate(0)', opacity: '1'},
     exiting:  {height: '0', marginBottom: '0', transform: 'translate(-1px, -24px)', opacity: '0'}
   }
-
 	return (
 		<div className='min-w-[768px] w-[768px] flex flex-col'>
 			<Transition nodeRef={headerRef} in={layout} timeout={duration} unmountOnExit>
 				{state => (
 					<header ref={headerRef} style={{...defaultStyle, ...transitionStyles[state]}}>
-						<h1>{children === undefined ? id : location.pathname.slice(1)}</h1>
+						<h1>{id}</h1>
 					</header>
 				)}
 			</Transition>
-			{children === undefined ? <Outlet /> /*ProjectItem*/ : children}
+			<Outlet /> {/* ProjectItem */}
 		</div>
 
 	)
