@@ -14,6 +14,7 @@ import { SectionLeyout3 } from './_development/sectionLeyout3/SectionLeyout3'
 import { SectionLeyout4 } from './_development/sectionLeyout4/SectionLeyout4'
 import { _dropdown } from './_development/dropdown/_dropdown'
 import { _router } from './_development/router/_router'
+import { _reduxToolkit } from './_development/reduxToolkit/_reduxToolkit'
 
 
 
@@ -33,6 +34,7 @@ export const App = () => {
     {id: 'sectionLeyout4', JSXElement: <SectionLeyout4 />, category: 'development'},
     {id: '_dropdown', JSXElement: <_dropdown />, category: 'development'},
 		{id: 'router', category: 'development'},
+		{id: 'reduxToolkit', JSXElement: <_reduxToolkit/>, category: 'development'},
 	]
 
 	const Router = () => {
