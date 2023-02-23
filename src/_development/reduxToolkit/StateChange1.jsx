@@ -24,8 +24,8 @@ export const StateChange1 = () => {
 
   return (
     <div>
-      <div>state change 1</div>
-      <div className='w-[300px] flex flex-col gap-y-1 border p-1'>
+      <div role='heading' className='font-bold mb-1'>state change 1</div>
+      <div className='w-[350px] flex flex-col gap-y-1 border p-1'>
 
         <form onChange={(e) => dispatch(setFirstName(e.target.value))} className='relative flex items-center gap-x-1'>
           <label htmlFor='firstInput' className='cursor-pointer'>firstname: </label>
