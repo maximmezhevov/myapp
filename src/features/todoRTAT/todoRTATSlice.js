@@ -42,21 +42,40 @@ export const todoRTATSlice = createSlice({
       state.todos = state.todos.filter(todo => todo.id !== action.payload.id)
     }
   },
-  extraReducers: {
-    [fetchTodos.pending]: (state) => {
-      state.status = 'pending'
-      state.error = null
-    },
-    [fetchTodos.fulfilled]: (state, action) => {
-      state.status = 'fulfilled'
-      state.todos = action.payload 
-    },
-    [fetchTodos.rejected]: (state, action) => {
-      state.status = 'rejected'
-      state.error = action.payload
-    }
-  }
+  // extraReducers: {
+  //   [fetchTodos.pending]: (state) => {
+  //     state.status = 'pending'
+  //     state.error = null
+  //   },
+  //   [fetchTodos.fulfilled]: (state, action) => {
+  //     state.status = 'fulfilled'
+  //     state.todos = action.payload 
+  //   },
+  //   [fetchTodos.rejected]: (state, action) => {
+  //     state.status = 'rejected'
+  //     state.error = action.payload
+  //   }
+  // }
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchTodos.pending, (state) => {
+        state.status = 'pending'
+        state.error = null
+        // console.log('addCase fetchTodos pending')
+      })
+      .addCase(fetchTodos.fulfilled, (state, action) => {
+        state.status = 'fulfilled'
+        state.todos = action.payload 
+        // console.log('addCase fetchTodos fulfilled')
+      })
+      .addCase(fetchTodos.rejected, (state, action) => {
+        state.status = 'rejected'
+        state.error = action.payload
+        // console.log('addCase fetchTodos rejected')
+      })
+  },
 })
+  
 
 export const { addTodo, toggleCompletedTodo, removeTodo } = todoRTATSlice.actions
 export default todoRTATSlice.reducer

@@ -1,10 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import axios from "axios"
 
-const initialState = {
-  posts: [],
-}
-
 export const getPosts = createAsyncThunk(
   'posts/getPosts',
   async (_, {/*rejectWithValue, */ dispatch }) => {
@@ -40,7 +36,11 @@ export const deletePostById2 = createAsyncThunk(
 
 export const postSlice = createSlice({
   name: 'posts',
-  initialState,
+  initialState: {
+    posts: [],
+    status: null,
+    error: null
+  },
   reducers: {
     setPosts: (state, action) => {
       state.posts = action.payload
@@ -48,6 +48,7 @@ export const postSlice = createSlice({
     deletePost: (state, action) => {
       state.posts = state.posts.filter(post => post.id !== action.payload)
     },
+
     setPosts2: (state, action) => {
       state.posts = action.payload
     },
@@ -66,12 +67,30 @@ export const postSlice = createSlice({
 
   extraReducers: (builder) => {
     builder
-      .addCase(getPosts.pending, () => console.log('getPosts: pending'))
-      .addCase(getPosts.fulfilled, () => console.log('getPosts: fulfilled'))
-      .addCase(getPosts.rejected, () => console.log('getPosts: rejected'))
-      .addCase(getPosts2.pending, () => console.log('getPosts2: pending'))
-      .addCase(getPosts2.fulfilled, () => console.log('getPosts2: fulfilled'))
-      .addCase(getPosts2.rejected, () => console.log('getPosts2: rejected'))
+      .addCase(getPosts.pending, (state) => {
+        state.status = 'pending'
+        console.log('getPosts: pending')
+      })
+      .addCase(getPosts.fulfilled, (state) => {
+        state.status = 'fulfilled'
+        console.log('getPosts: fulfilled')
+      })
+      .addCase(getPosts.rejected, (state) => {
+        state.status = 'rejected'
+        console.log('getPosts: rejected')
+      })
+      .addCase(getPosts2.pending, (state) => {
+        state.status = 'pending'
+        console.log('getPosts2: pending')
+      })
+      .addCase(getPosts2.fulfilled, (state) => {
+        state.status = 'fulfilled'
+        console.log('getPosts2: fulfilled')
+      })
+      .addCase(getPosts2.rejected, (state) => {
+        state.status = 'rejected'
+        console.log('getPosts2: rejected')
+      })
   },
 })
 

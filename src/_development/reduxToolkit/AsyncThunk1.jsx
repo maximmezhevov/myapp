@@ -8,7 +8,7 @@ export const AsyncThunk1 = () => {
     <div>
       <div role='heading' className='font-bold mb-1'>AsyncThunk</div> 
       <div className='w-[350px]'>
-        <button type='submit' onClick={() => dispatch(getPosts())} className='w-full border px-1 bg-blue-50 hover:bg-blue-100'>
+        <button type='submit' onClick={() => dispatch(getPosts2())} className='w-full border px-1 bg-blue-50 hover:bg-blue-100'>
           get posts
         </button>
         {posts.map(post => <PostItem key={post.id} post={post}/>)}

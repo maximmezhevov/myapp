@@ -104,8 +104,8 @@ const TodoItem = ({todo}) => {
 
   return (
     <div className='flex justify-between items-center my-1 gap-x-1 border p-1 hover:bg-zinc-50'>
-      <input disabled id={`completed_${todo.id}`} type='checkbox' checked={todo.completed} onChange={() => handlerToggleTodo(todo.id)}className='cursor-pointer' />
-      <label htmlFor={`completed_${todo.id}`} title={todo.title} className={`w-full text-ellipsis overflow-hidden cursor-pointer ${todo.completed && 'line-through text-gray-400'}`}>
+      <input disabled id={`todoRTAT${todo.id}`} type='checkbox' checked={todo.completed} onChange={() => handlerToggleTodo(todo.id)}className='cursor-pointer' />
+      <label htmlFor={`todoRTAT${todo.id}`} title={todo.title} className={`w-full text-ellipsis overflow-hidden cursor-pointer ${todo.completed && 'line-through text-gray-400'}`}>
         {todo.title}
       </label>
       <button disabled onClick={() => handlerRemoveTodo(todo.id)}>
