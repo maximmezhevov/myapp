@@ -1,32 +1,34 @@
 import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { addTodo, fetchTodos2, removeTodo, toggleCompletedTodo } from "../../features/todoRTAT/todoRTATSlice2"
+import { addTodo, fetchTodos, deleteTodo, /*removeTodo*/ /*toggleCompletedTodo, */ toggleStatus} from "../../features/todoRTAT/todoRTATSlice2"
 import { v4 } from "uuid"
 
 export const TodoRTAT2 = () => {
-  const {todos, status, error} = useSelector(state => state.todoRTAT2)
+  const {todos, fetchStatus, fetchError, interactionError} = useSelector(state => state.todoRTAT2)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(fetchTodos2())
+    dispatch(fetchTodos()) //; console.log('render dispatch(fetchTodos2())')
   }, [dispatch])
 
   return (
     <div>
-      <div role='heading' className='font-bold mb-1'>Todo ReduxToolkit AsyncThunk 2</div>
+      <div role='heading' className='text-lg font-bold'>Todo ReduxToolkit AsyncThunk 2</div>
+      <div className='mb-2 text-purple-500'>AsyncThunk кроме добавления!</div>
       <div id='todoReduxToolkit' className='w-[350px] border p-1'>
+        {interactionError && <div className='text-sm text-center text-red-500 mb-1'>An error occured: {interactionError}</div>}
         <TodoForm />
-          <div /*TodoList*/ className='h-[250px] overflow-y-scroll'>
-          {(status === 'pending' || error) &&
-            <div className='h-full flex items-center justify-center'>
-              {status === 'pending' && 'Loading...'}
-              {error && `An error occured: ${error}`}
-            </div>
-          }
-          {status === 'fulfilled' &&
-            todos.map(todo => <TodoItem key={todo.id} todo={todo} />)
-          }
+        <div className='h-[250px] overflow-y-scroll'>
+        {(fetchStatus === 'pending' || fetchError) &&
+          <div className={`h-full flex items-center justify-center text-center ${fetchError && 'text-sm text-red-500'}`}>
+            {fetchStatus === 'pending' && 'Loading...'}
+            {fetchError && `An error occured: ${fetchError}`}
           </div>
+        }
+        {fetchStatus === 'fulfilled' &&
+          todos.map(todo => <TodoItem key={todo.id} todo={todo} />)
+        }
+        </div>
       </div>
     </div>
   )
@@ -45,10 +47,10 @@ const TodoForm = () => {
   const handlerAddTodo = () => {
     if (todoValue.trim().length) {
       dispatch(addTodo({
+          id: v4(), // Date.now() // new Date().toISOString()
           todoValue, // с срезe text из изменен на title!
-          id: v4() // Date.now() // new Date().toISOString()
         })
-      ) // dispatch(addTodo({ todoValue }) // передаем объект!
+      )
       setTodoValue('')
       focusInputAddTodo()
     } else { 
@@ -94,11 +96,12 @@ const TodoItem = ({todo}) => {
   const dispatch = useDispatch()
 
   const handlerToggleTodo = (id) => {
-    dispatch(toggleCompletedTodo({ id })) // передаем объект!
+    dispatch(toggleStatus(id))
   }
 
   const handlerRemoveTodo = (id) => {
-    dispatch(removeTodo({ id }))
+    // dispatch(removeTodo({ id }))
+    dispatch(deleteTodo(id))
   }
 
   return (

@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const fetchTodos2 = createAsyncThunk(
-  'todoRTATSlice/fetchTodos2',
+export const fetchTodos = createAsyncThunk(
+  'todoRTATSlice2/fetchTodos',
   async function(_, {rejectWithValue}) {
     try {
       const response = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=4')
@@ -19,12 +19,69 @@ export const fetchTodos2 = createAsyncThunk(
   }
 )
 
+export const deleteTodo = createAsyncThunk(
+  'todoRTATSlice2/deleteTodo',
+  async function(id, {rejectWithValue, dispatch}) {
+    try {
+      const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+        method: 'DELETE'
+      })
+
+      if (!response.ok) {
+        throw new Error('Can\'t delete todo. Server Error!')
+      }
+
+      dispatch(removeTodo({id}))
+
+    } catch (error) {
+      return rejectWithValue(error.message)
+    }
+  }
+)
+
+export const toggleStatus = createAsyncThunk(
+  'todoRTATSlice2/toggleStatus',
+  async function(id, {rejectWithValue, dispatch, getState}) {
+    const todo = getState().todoRTAT2.todos.find(todo => todo.id === id)
+
+    try {
+      const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application.json'
+        },
+        body: JSON.stringify({
+          completed: !todo.completed,
+        })
+      })
+
+      if (!response.ok) {
+        throw new Error('Can\'t toggle status. Server Error!')
+      }
+
+      // const data = await response.json()
+      // console.log(data)
+      dispatch(toggleCompletedTodo({id}))
+
+    } catch (error) {
+        return rejectWithValue(error.message)
+    }
+  }
+)
+
+const setError = (state, action) => {
+  state.interactionStatus = 'rejected'
+  state.interactionError = action.payload
+}
+
 export const todoRTATSlice2 = createSlice({
   name: 'todoRTATSlice2',
   initialState: {
     todos: [],
-    status: null,
-    error: null
+    fetchStatus: null,
+    fetchError: null,
+    interactionStatus: null,
+    interactionError: null
   },
   reducers: {
     addTodo: (state, action) => {
@@ -42,34 +99,22 @@ export const todoRTATSlice2 = createSlice({
       state.todos = state.todos.filter(todo => todo.id !== action.payload.id)
     }
   },
-  // extraReducers: {
-  //   [fetchTodos2.pending]: (state) => {
-  //     state.status = 'pending'
-  //     state.error = null
-  //   },
-  //   [fetchTodos2.fulfilled]: (state, action) => {
-  //     state.status = 'fulfilled'
-  //     state.todos = action.payload 
-  //   },
-  //   [fetchTodos2.rejected]: (state, action) => {
-  //     state.status = 'rejected'
-  //     state.error = action.payload
-  //   }
-  // }
   extraReducers: (builder) => {
     builder
-      .addCase(fetchTodos2.pending, (state) => {
-        state.status = 'pending'
-        state.error = null
+      .addCase(fetchTodos.pending, (state) => {
+        state.fetchStatus = 'pending'
+        state.fetchError = null
       })
-      .addCase(fetchTodos2.fulfilled, (state, action) => {
-        state.status = 'fulfilled'
-        state.todos = action.payload 
+      .addCase(fetchTodos.fulfilled, (state, action) => {
+        state.fetchStatus = 'fulfilled'
+        state.todos = action.payload
       })
-      .addCase(fetchTodos2.rejected, (state, action) => {
-        state.status = 'rejected'
-        state.error = action.payload
+      .addCase(fetchTodos.rejected, (state, action) => {
+        state.fetchStatus = 'rejected';
+        state.fetchError = action.payload
       })
+      .addCase(deleteTodo.rejected, setError)
+      .addCase(toggleStatus.rejected, setError)
   },
 })
 

@@ -39,7 +39,6 @@ export const postSlice = createSlice({
   initialState: {
     posts: [],
     status: null,
-    error: null
   },
   reducers: {
     setPosts: (state, action) => {
@@ -48,7 +47,6 @@ export const postSlice = createSlice({
     deletePost: (state, action) => {
       state.posts = state.posts.filter(post => post.id !== action.payload)
     },
-
     setPosts2: (state, action) => {
       state.posts = action.payload
     },
