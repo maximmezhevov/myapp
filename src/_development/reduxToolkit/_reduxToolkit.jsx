@@ -4,6 +4,7 @@ import { AsyncThunk1 } from './AsyncThunk1'
 import { TodoRTAT } from './TodoRTAT'
 import { TodoReduxToolkit2 } from './TodoReduxToolkit2'
 import { TodoRTAT2 } from './TodoRTAT2'
+import { TodoRTAT3 } from './TodoRTAT3'
 
 export const _reduxToolkit = () => {
   return (
@@ -14,6 +15,7 @@ export const _reduxToolkit = () => {
       <TodoReduxToolkit2 />
       <TodoRTAT />
       <TodoRTAT2 />
+      <TodoRTAT3 />
     </div>
   )
 }

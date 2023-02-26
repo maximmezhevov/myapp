@@ -22,7 +22,7 @@ export const getPosts2 = createAsyncThunk(
   async function(_, {/*rejectWithValue ,*/ dispatch}) {
     const response = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=5')
     const data = await response.json()
-    return dispatch(setPosts2(data))
+    dispatch(setPosts2(data))
   }
 )
 
@@ -30,7 +30,7 @@ export const deletePostById2 = createAsyncThunk(
   'posts/deletePostById2',
   async (id, {/*rejectWithValue, */ dispatch}) => {
     await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
-    return dispatch(deletePost2(id))
+    dispatch(deletePost2(id))
   }
 )
 

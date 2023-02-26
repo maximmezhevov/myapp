@@ -5,6 +5,7 @@ import postSlice from '../features/post/postSlice'
 import todoSlice2 from '../features/todoReduxToolkit/todoSlice2'
 import todoRTATSlice from '../features/todoRTAT/todoRTATSlice'
 import todoRTATSlice2 from '../features/todoRTAT/todoRTATSlice2'
+import todoRTAT3Slice from '../features/todoRTAT/todoRTAT3Slice'
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     post: postSlice,
     todoRT2: todoSlice2,
     todoRTAT: todoRTATSlice,
-    todoRTAT2: todoRTATSlice2
+    todoRTAT2: todoRTATSlice2,
+    todoRTAT3: todoRTAT3Slice
   }
 })
