@@ -1,51 +1,25 @@
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { 
-  /*addTodo => addNewdTodo removeTodo => deleteTodo toggleCompletedTodo => toggleStatus,*/ // <- actions
-  fetchTodos, deleteTodo, toggleStatus, getTodos, addNewdTodo // <- AsyncThunk... export default
-} from "../../features/todoRTAT/todoRTAT3Slice"
-// import { v4 } from "uuid"
+import { addTodo, removeAllTodo, removeCompletedTodo, removeTodo, toggleCompletedTodo } from "../../features/todoReduxToolkit/todoReduxToolkit3Slice"
+import { v4 } from "uuid"
 
-export const TodoRTAT3 = () => {
-  const {todos, fetchStatus, fetchError, interactionError} = useSelector(state => state.todoRTAT3)
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(fetchTodos()) || dispatch(getTodos()) //; console.log('render dispatch(fetchTodos2())')
-  }, [dispatch])
+export const TodoReduxToolkit3 = () => {
+  const todos = useSelector((state) => state.todoReduxToolkit3.todos)
 
   return (
     <div>
       <div className='mb-2'>
-        <div role='heading' className='text-lg font-bold'>Todo ReduxToolkit AsyncThunk 3</div>
-        <div className=' text-purple-500'>FULL AsyncThunk</div>
-        <div className='mt-[2px]'>jsonplaceholder</div>
-        <div>
-          <div className='flex gap-x-1'>
-            <span>code:</span>
-            <a href='https://github.com/maximmezhevov/myapp/blob/master/src/_development/reduxToolkit/TodoRTAT3.jsx' target='_blank' className={`after:content-['_↗'] hover:text-blue-500`}>github...APP</a>
-            ,
-            <a href='https://github.com/maximmezhevov/myapp/blob/master/src/features/todoRTAT/todoRTAT3Slice.js' target='_blank' className={`after:content-['_↗'] hover:text-blue-500`}>gtihub...SLICE</a>
-          </div>
-        </div>
+        <div role='heading' className='text-lg font-bold'>Todo ReduxToolkit 3</div>
+        <div className=' text-purple-500'>.</div>
+        <div className='mt-[2px]'>.</div>
       </div>
       <div id='todoReduxToolkit' className='w-[350px] border p-1'>
-        {/* <button onClick={() => dispatch(getTodos())} title={`...fetch('https://jsonplaceholder.typicode.com/todos?_start=4&_limit=3') ...`} className='w-full mb-1 border px-1 bg-blue-50 hover:bg-blue-100'>
-          reload / get todos
-        </button> */}
-        {interactionError && <div className='text-sm text-center text-red-500 mb-1'>An error occured: {interactionError}</div>}
-        <TodoForm />
-        <div className='h-[250px] overflow-y-scroll'>
-        {(fetchStatus === 'pending' || fetchError) &&
-          <div className={`h-full flex items-center justify-center text-center ${fetchError && 'text-sm text-red-500'}`}>
-            {fetchStatus === 'pending' && 'Loading...'}
-            {fetchError && `An error occured: ${fetchError}`}
-          </div>
-        }
-        {fetchStatus === 'fulfilled' &&
-          todos.map(todo => <TodoItem key={todo.id} todo={todo} />)
-        }
+        <TodoForm/>
+        <Filter todos={todos}/>
+        <div /*TodoList*/ className='h-[200px] overflow-y-scroll'>
+          {todos.map(todo => <TodoItem key={todo.id} todo={todo} />)}
         </div>
+        <Remove todos={todos}/>
       </div>
     </div>
   )
@@ -63,9 +37,7 @@ const TodoForm = () => {
 
   const handlerAddTodo = () => {
     if (todoValue.trim().length) {
-      dispatch(addNewdTodo(todoValue)
-      // dispatch(addTodo({id: v4(), todoValue, completed: false })
-      )
+      dispatch(addTodo({todoValue, id: v4(), completed: false}))
       setTodoValue('')
       focusInputAddTodo()
     } else { 
@@ -111,18 +83,18 @@ const TodoItem = ({todo}) => {
   const dispatch = useDispatch()
 
   const handlerToggleTodo = (id) => {
-    dispatch(toggleStatus(id))
+    dispatch(toggleCompletedTodo(id))
   }
 
   const handlerRemoveTodo = (id) => {
-    dispatch(deleteTodo(id))
+    dispatch(removeTodo(id))
   }
 
   return (
     <div className='flex justify-between items-center my-1 gap-x-1 border p-1 hover:bg-zinc-50'>
-      <input id={`todoRTAT2${todo.id}`} type='checkbox' checked={todo.completed} onChange={() => handlerToggleTodo(todo.id)}className='cursor-pointer' />
-      <label htmlFor={`todoRTAT2${todo.id}`} title={todo.title} className={`w-full text-ellipsis overflow-hidden cursor-pointer ${todo.completed && 'line-through text-gray-400'}`}>
-        {todo.title}
+      <input id={`completed_${todo.id}`} type='checkbox' checked={todo.completed} onChange={() => handlerToggleTodo(todo.id)}className='cursor-pointer' />
+      <label htmlFor={`completed_${todo.id}`} title={todo.text} className={`w-full text-ellipsis overflow-hidden cursor-pointer ${todo.completed && 'line-through text-gray-400'}`}>
+        {todo.text}
       </label>
       <button onClick={() => handlerRemoveTodo(todo.id)}>
         <svg className="w-4 h-4" 
@@ -130,6 +102,34 @@ const TodoItem = ({todo}) => {
           <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
         </svg>
       </button>
+    </div>
+  )
+}
+
+const Button = ({name, className, ...props}) => {
+  return <button {...props} className={`w-full border px-1 hover:bg-zinc-50 disabled:bg-zinc-50/50 disabled:text-zinc-400 ${className}`}>{name}</button>
+}
+
+const Remove = ({todos}) => {
+  const dispatch = useDispatch()
+  const completedTodoLength = todos.filter(todo => todo.completed === true).length
+  return (
+    <div className='flex mt-1 gap-x-1'>
+      <Button onClick={() => dispatch(removeCompletedTodo())} name='removeCompleted' disabled={completedTodoLength == ''} />
+      <Button onClick={() => dispatch(removeAllTodo())} name='removeAll' disabled={todos.length == ''} />
+    </div>
+  )
+}
+
+const Filter = ({todos}) => {
+  const [activeFilter, setActiveFilter] = useState('all')
+  const completedTodoTrueLength = todos.filter(todo => todo.completed === true).length
+  const completedTodoFalseLength = todos.filter(todo => todo.completed === false).length
+  return (
+    <div className='flex mt-1 gap-x-1'>
+      <Button name='all' onClick={() => setActiveFilter('all')} className={activeFilter === 'all' && 'bg-sky-50 hover:bg-sky-100'} />
+      <Button name='completed' onClick={() => setActiveFilter('completed')} disabled={completedTodoTrueLength == ''} className={activeFilter === 'completed' && 'bg-sky-50 hover:bg-sky-100'}/>
+      <Button name='unfinished' onClick={() => setActiveFilter('unfinished')} disabled={completedTodoFalseLength == ''} className={activeFilter === 'unfinished' && 'bg-sky-50 hover:bg-sky-100'} />
     </div>
   )
 }
