@@ -15,7 +15,7 @@ export const TodoReduxToolkit3 = () => {
             <a href='https://github.com/maximmezhevov/myapp/blob/master/src/_development/reduxToolkit/TodoReduxToolkit3.jsx' target='_blank' className='hover:text-blue-500'>app
               <span className={`text-xs before:content-['_↗']`}>(github)</span>
             </a>
-            <a href='https://github.com/maximmezhevov/myapp/blob/master/src/_development/reduxToolkit/TodoReduxToolkit3.jsx' target='_blank' className='hover:text-blue-500'>slice
+            <a href='https://github.com/maximmezhevov/myapp/blob/master/src/features/todoReduxToolkit/todoReduxToolkit3Slice.js' target='_blank' className='hover:text-blue-500'>slice
               <span className={`text-xs before:content-['_↗']`}>(github)</span>
             </a>
           </div>
