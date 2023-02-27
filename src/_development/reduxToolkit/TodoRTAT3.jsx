@@ -18,14 +18,18 @@ export const TodoRTAT3 = () => {
     <div>
       <div className='mb-2'>
         <div role='heading' className='text-lg font-bold'>Todo ReduxToolkit AsyncThunk 3</div>
-        <div className=' text-purple-500'>FULL AsyncThunk</div>
-        <div className='mt-[2px]'>jsonplaceholder</div>
+        <div className=' text-purple-500'>FULL AsyncThunk (jsonplaceholder)</div>
         <div>
-          <div className='flex gap-x-1'>
-            <span>code:</span>
-            <a href='https://github.com/maximmezhevov/myapp/blob/master/src/_development/reduxToolkit/TodoRTAT3.jsx' target='_blank' className={`after:content-['_↗'] hover:text-blue-500`}>github...APP</a>
-            ,
-            <a href='https://github.com/maximmezhevov/myapp/blob/master/src/features/todoRTAT/todoRTAT3Slice.js' target='_blank' className={`after:content-['_↗'] hover:text-blue-500`}>gtihub...SLICE</a>
+          <div className='flex gap-x-2'>
+            <a href='https://github.com/maximmezhevov/myapp/blob/master/src/_development/reduxToolkit/TodoRTAT3.jsx' target='_blank' className='hover:text-blue-500'>app
+              <span className={`text-xs before:content-['_↗']`}>(github)</span>
+            </a>
+            <a href='https://github.com/maximmezhevov/myapp/blob/master/src/features/todoRTAT/todoRTAT3Slice.js' target='_blank' className='hover:text-blue-500'>slice
+              <span className={`text-xs before:content-['_↗']`}>(github)</span>
+            </a>
+          </div>
+          <div className='text-sm italic'>
+           {`Поскольку jsonplaceholder генерирует по запросу только {... id: 201 ...}, в избежании ошибки react c key ограничения — доступно добавить только одиу задачу! (Запрос на сервер отправляется, получаем в data {userId: 1, title: '...', completed: false, id: 201}, но в state не передается)`}
           </div>
         </div>
       </div>
