@@ -12,7 +12,7 @@ export const TodoReduxToolkit3 = () => {
         <div role='heading' className='text-lg font-bold'>Todo ReduxToolkit 3</div>
         <div className=' text-purple-500'>FULL ReduxToolkit</div>
         <div className='flex gap-x-2'>
-            <a href='https://github.com/maximmezhevov/myapp/blob/master/src/_development/reduxToolkit/TodoRTAT3.jsx' target='_blank' className='hover:text-blue-500'>app
+            <a href='https://github.com/maximmezhevov/myapp/blob/master/src/_development/reduxToolkit/TodoReduxToolkit3.jsx' target='_blank' className='hover:text-blue-500'>app
               <span className={`text-xs before:content-['_↗']`}>(github)</span>
             </a>
             <a href='https://github.com/maximmezhevov/myapp/blob/master/src/_development/reduxToolkit/TodoReduxToolkit3.jsx' target='_blank' className='hover:text-blue-500'>slice
