@@ -7,4 +7,8 @@ export default defineConfig({
   // server: {
   //   host: true
   // }
+  // define: {
+  //   // 'process.env': {}
+  //   // 'process.env': process.env
+  // }
 })

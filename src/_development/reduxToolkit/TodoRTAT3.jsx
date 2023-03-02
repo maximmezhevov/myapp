@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useId, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { 
   /*addTodo => addNewdTodo removeTodo => deleteTodo toggleCompletedTodo => toggleStatus,*/ // <- actions
@@ -16,11 +16,12 @@ export const TodoRTAT3 = () => {
 
   return (
     <div>
-      <div className='mb-2'>
-        <div role='heading' className='text-lg font-bold'>Todo ReduxToolkit AsyncThunk 3</div>
+      <header className='mb-2 w-[350px]'>
+        <div className='text-lg font-bold'>Todo ReduxToolkit AsyncThunk 3</div>
         <div className=' text-purple-500'>FULL AsyncThunk (jsonplaceholder)</div>
         <div>
           <div className='flex gap-x-2'>
+            code:
             <a href='https://github.com/maximmezhevov/myapp/blob/master/src/_development/reduxToolkit/TodoRTAT3.jsx' target='_blank' className='hover:text-blue-500'>app
               <span className={`text-xs before:content-['_↗']`}>(github)</span>
             </a>
@@ -28,11 +29,11 @@ export const TodoRTAT3 = () => {
               <span className={`text-xs before:content-['_↗']`}>(github)</span>
             </a>
           </div>
-          <div className='text-sm italic'>
-           {`Поскольку jsonplaceholder генерирует по запросу только {... id: 201 ...}, в избежании ошибки react c key ограничения — доступно добавить только одиу задачу! (Запрос на сервер отправляется, получаем в data {userId: 1, title: '...', completed: false, id: 201}, но в state не передается)`}
+          <div className='mt-[2px] text-sm italic'>
+           {`Поскольку jsonplaceholder генерирует по запросу только: {... id: 201 ...}, доступна возможность добавить только одну задачу в избежании ошибки key! (Запрос на сервер отправляется, получаем в data: {userId: 1, title: '...', completed: false, id: 201}, но в state не передается)!`}
           </div>
         </div>
-      </div>
+      </header>
       <div id='todoReduxToolkit' className='w-[350px] border p-1'>
         {/* <button onClick={() => dispatch(getTodos())} title={`...fetch('https://jsonplaceholder.typicode.com/todos?_start=4&_limit=3') ...`} className='w-full mb-1 border px-1 bg-blue-50 hover:bg-blue-100'>
           reload / get todos
@@ -112,6 +113,7 @@ const TodoForm = () => {
 }
 
 const TodoItem = ({todo}) => {
+  const id = useId()
   const dispatch = useDispatch()
 
   const handlerToggleTodo = (id) => {
@@ -124,8 +126,8 @@ const TodoItem = ({todo}) => {
 
   return (
     <div className='flex justify-between items-center my-1 gap-x-1 border p-1 hover:bg-zinc-50'>
-      <input id={`todoRTAT2${todo.id}`} type='checkbox' checked={todo.completed} onChange={() => handlerToggleTodo(todo.id)}className='cursor-pointer' />
-      <label htmlFor={`todoRTAT2${todo.id}`} title={todo.title} className={`w-full text-ellipsis overflow-hidden cursor-pointer ${todo.completed && 'line-through text-gray-400'}`}>
+      <input id={id} type='checkbox' checked={todo.completed} onChange={() => handlerToggleTodo(todo.id)}className='cursor-pointer' />
+      <label htmlFor={id} title={todo.title} className={`w-full text-ellipsis overflow-hidden cursor-pointer ${todo.completed && 'line-through text-gray-400'}`}>
         {todo.title}
       </label>
       <button onClick={() => handlerRemoveTodo(todo.id)}>

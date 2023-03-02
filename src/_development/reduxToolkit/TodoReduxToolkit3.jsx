@@ -1,32 +1,32 @@
-import { useRef, useState } from "react"
+import { useId, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { addTodo, removeAllTodo, removeCompletedTodo, removeTodo, toggleCompletedTodo } from "../../features/todoReduxToolkit/todoReduxToolkit3Slice"
 import { v4 } from "uuid"
 
 export const TodoReduxToolkit3 = () => {
   const todos = useSelector((state) => state.todoReduxToolkit3.todos)
+  const [activeFilter, setActiveFilter] = useState('all')
 
   return (
     <div>
-      <div className='mb-2'>
-        <div role='heading' className='text-lg font-bold'>Todo ReduxToolkit 3</div>
+      <div role='heading' className='mb-2'>
+        <div className='text-lg font-bold'>Todo ReduxToolkit 3</div>
         <div className=' text-purple-500'>FULL ReduxToolkit</div>
         <div className='flex gap-x-2'>
-            <a href='https://github.com/maximmezhevov/myapp/blob/master/src/_development/reduxToolkit/TodoReduxToolkit3.jsx' target='_blank' className='hover:text-blue-500'>app
-              <span className={`text-xs before:content-['_↗']`}>(github)</span>
-            </a>
-            <a href='https://github.com/maximmezhevov/myapp/blob/master/src/features/todoReduxToolkit/todoReduxToolkit3Slice.js' target='_blank' className='hover:text-blue-500'>slice
-              <span className={`text-xs before:content-['_↗']`}>(github)</span>
-            </a>
-          </div>
-      </div>
-      <div id='todoReduxToolkit' className='w-[350px] border p-1'>
-        <TodoForm/>
-        <Filter todos={todos}/>
-        <div /*TodoList*/ className='h-[200px] overflow-y-scroll'>
-          {todos.map(todo => <TodoItem key={todo.id} todo={todo} />)}
+          code:
+          <a href='https://github.com/maximmezhevov/myapp/blob/master/src/_development/reduxToolkit/TodoReduxToolkit3.jsx' target='_blank' className='hover:text-blue-500'>app
+            <span className={`text-xs before:content-['_↗']`}>(github)</span>
+          </a>
+          <a href='https://github.com/maximmezhevov/myapp/blob/master/src/features/todoReduxToolkit/todoReduxToolkit3Slice.js' target='_blank' className='hover:text-blue-500'>slice
+            <span className={`text-xs before:content-['_↗']`}>(github)</span>
+          </a>
         </div>
-        <Remove todos={todos}/>
+      </div>
+      <div id='todoReduxToolkit3' className='w-[350px] border p-1'>
+        <TodoForm/>
+        <FilterButtons activeFilter={activeFilter} setActiveFilter={setActiveFilter}/>
+        <TodoList todos={todos} activeFilter={activeFilter} />
+        <RemoveButtons />
       </div>
     </div>
   )
@@ -86,7 +86,26 @@ const TodoForm = () => {
   )
 }
 
+const TodoList = ({todos, activeFilter}) => {
+  const filter = () => {
+    switch (activeFilter) {
+      case 'all':
+        return todos
+      case 'unfinished':
+        return todos.filter(todo => !todo.completed)
+      case 'completed':
+        return todos.filter(todo => todo.completed)
+    }
+  }
+  return (
+    <div className='h-[200px] overflow-y-scroll'>
+      {filter().map(todo => <TodoItem key={todo.id} todo={todo} />)}
+    </div>
+  )
+}
+
 const TodoItem = ({todo}) => {
+  const id = useId()
   const dispatch = useDispatch()
 
   const handlerToggleTodo = (id) => {
@@ -99,8 +118,8 @@ const TodoItem = ({todo}) => {
 
   return (
     <div className='flex justify-between items-center my-1 gap-x-1 border p-1 hover:bg-zinc-50'>
-      <input id={`completed_${todo.id}`} type='checkbox' checked={todo.completed} onChange={() => handlerToggleTodo(todo.id)}className='cursor-pointer' />
-      <label htmlFor={`completed_${todo.id}`} title={todo.text} className={`w-full text-ellipsis overflow-hidden cursor-pointer ${todo.completed && 'line-through text-gray-400'}`}>
+      <input id={id} type='checkbox' checked={todo.completed} onChange={() => handlerToggleTodo(todo.id)}className='cursor-pointer' />
+      <label htmlFor={id} title={todo.text} className={`w-full text-ellipsis overflow-hidden cursor-pointer ${todo.completed && 'line-through text-gray-400'}`}>
         {todo.text}
       </label>
       <button onClick={() => handlerRemoveTodo(todo.id)}>
@@ -113,30 +132,36 @@ const TodoItem = ({todo}) => {
   )
 }
 
-const Button = ({name, className, ...props}) => {
-  return <button {...props} className={`w-full border px-1 hover:bg-zinc-50 disabled:bg-zinc-50/50 disabled:text-zinc-400 ${className}`}>{name}</button>
+const Button = ({...props}) => {
+  return <button {...props} className={`w-full border px-1 hover:bg-zinc-50 disabled:bg-zinc-50/50 disabled:text-zinc-400 ${props.className}`}>{props.name}</button>
 }
 
-const Remove = ({todos}) => {
+const RemoveButtons = () => {
   const dispatch = useDispatch()
-  const completedTodoLength = todos.filter(todo => todo.completed === true).length
+
+  const handlerRemoveCompletedTodo = () => {
+    dispatch(removeCompletedTodo())
+  }
+
+  const handlerRemoveAllTodo = () => {
+    dispatch(removeAllTodo())
+  }
+
   return (
     <div className='flex mt-1 gap-x-1'>
-      <Button onClick={() => dispatch(removeCompletedTodo())} name='removeCompleted' disabled={completedTodoLength == ''} />
-      <Button onClick={() => dispatch(removeAllTodo())} name='removeAll' disabled={todos.length == ''} />
+      <Button onClick={handlerRemoveCompletedTodo} name='removeCompleted' />
+      <Button onClick={handlerRemoveAllTodo} name='removeAll' />
     </div>
   )
 }
 
-const Filter = ({todos}) => {
-  const [activeFilter, setActiveFilter] = useState('all')
-  const completedTodoTrueLength = todos.filter(todo => todo.completed === true).length
-  const completedTodoFalseLength = todos.filter(todo => todo.completed === false).length
+const FilterButtons = ({activeFilter, setActiveFilter}) => {
+  const filterButtons = ['completed', 'all', 'unfinished']
   return (
     <div className='flex mt-1 gap-x-1'>
-      <Button name='all' onClick={() => setActiveFilter('all')} className={activeFilter === 'all' && 'bg-sky-50 hover:bg-sky-100'} />
-      <Button name='completed' onClick={() => setActiveFilter('completed')} disabled={completedTodoTrueLength == ''} className={activeFilter === 'completed' && 'bg-sky-50 hover:bg-sky-100'}/>
-      <Button name='unfinished' onClick={() => setActiveFilter('unfinished')} disabled={completedTodoFalseLength == ''} className={activeFilter === 'unfinished' && 'bg-sky-50 hover:bg-sky-100'} />
+      {filterButtons.map(button => 
+        <Button key={button} name={button} onClick={() => setActiveFilter(button)} className={`${activeFilter === button && 'bg-blue-50 hover:bg-blue-50 cursor-default'}`} />
+      )}
     </div>
   )
 }

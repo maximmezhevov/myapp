@@ -9,15 +9,18 @@ import { TodoReduxToolkit3 } from './TodoReduxToolkit3'
 
 export const _reduxToolkit = () => {
   return (
-    <div className='flex flex-col-reverse gap-y-5'>
-      <StateChange1 />
-      {/* <TodoReduxToolkit1 /> */}
-      <AsyncThunk1 />
-      <TodoReduxToolkit2 />
-      {/* <TodoRTAT />
-      <TodoRTAT2 /> */}
-      <TodoRTAT3 />
-      <TodoReduxToolkit3 />
+    <div id='_reduxToolkit'>
+      <div className='text-xl font-bold'>ReduxToolkit</div>
+      <div className='flex flex-col-reverse gap-y-5'>
+        <StateChange1 />
+        <TodoReduxToolkit1 />
+        <AsyncThunk1 />
+        <TodoReduxToolkit2 />
+        <TodoRTAT />
+        <TodoRTAT2 />
+        <TodoRTAT3 />
+        <TodoReduxToolkit3 />
+      </div>
     </div>
   )
 }
